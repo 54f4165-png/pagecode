@@ -1,11 +1,15 @@
-E39 - CLOUDFLARE TURNSTILE THẬT (GitHub + Vercel)
+E39 - BAN GITHUB + VERCEL / CLOUDFLARE TURNSTILE
 
-1. Giải nén và upload toàn bộ file/folder vào thư mục gốc GitHub (bao gồm api/verify.js và config.js).
-2. Mở config.js, thay DAN_SITE_KEY_CUA_BAN_VAO_DAY bằng Site Key công khai của widget Turnstile đã tạo cho pagecode-beta.vercel.app.
-3. Trên Vercel > Project > Settings > Environment Variables: tạo TURNSTILE_SECRET_KEY với Secret Key MỚI sau khi Rotate khóa bị lộ trong ảnh. Chọn Production (và Preview nếu hostname preview được phép).
-4. Redeploy website để biến môi trường có hiệu lực.
-5. Cloudflare > Turnstile: xác nhận hostname pagecode-beta.vercel.app đã được thêm.
-6. Test: mở trang, widget phải hiện; hoàn thành xác minh rồi nhấn KIỂM TRA NGAY. Máy chủ sẽ gọi Cloudflare Siteverify thực tế.
+1. Giai nen ZIP, upload TAT CA file vao thu muc goc GitHub: index.html, background.jpg, config.js, thu muc api/verify.js.
+2. Mo config.js, thay DAN_SITE_KEY_CUA_BAN_VAO_DAY bang SITE KEY cong khai cua widget Turnstile (khong co https://, khong phai Secret Key). Sau do Commit changes.
+3. Cloudflare Turnstile > Widget > Hostnames: cho phep pagecode-beta.vercel.app (khong co https:// hay /).
+4. Vi Secret Key cu da lo trong anh, Rotate Secret Key trong Cloudflare. KHONG dan Secret Key vao GitHub/chat.
+5. Vercel > Project > Settings > Environment Variables > Add: ten TURNSTILE_SECRET_KEY; value la Secret Key MOI; chon Production. Save, sau do Redeploy.
+6. Mo https://pagecode-beta.vercel.app/ de kiem tra. Neu thay 'Sitekey khong hop le', kiem tra lai config.js va hostname cua deployment hien tai.
 
-CHÚ Ý: Website chưa có API/cơ sở dữ liệu kiểm tra tài khoản, code và thưởng. Sau khi xác minh Cloudflare thành công, trang sẽ báo chưa kết nối cơ sở dữ liệu code; KHÔNG tự tuyên bố đã nhận thưởng.
-KHÔNG đưa Secret Key vào GitHub hoặc gửi ảnh chứa khóa.
+CHUC NANG:
+- Hien Turnstile that tren trang E39; API /api/verify xac minh token o may chu qua Cloudflare Siteverify.
+- Khong xac nhan code hay thuong khi chua co API/database ma code.
+- Khong nhung Secret Key vao HTML, config.js hay GitHub.
+
+LUU Y: Ban ZIP nay KHONG the duoc cau hinh hoan toan cho widget cua ban neu ban chua dien Site Key chinh xac. Chi can thay mot dong trong config.js.
