@@ -21,6 +21,7 @@ module.exports = async (req, res) => {
     if (verified.success !== true) return res.status(200).json({valid:false,reason:'verification_failed'});
     const {db} = require('./_firebase');
     const normalized = code.trim().toUpperCase();
+    if (!/^[A-Z]{6}$/.test(normalized)) return res.status(200).json({valid:false,reason:'invalid_code'});
     // Bonus codes are separate from deposit requirements and regular generated codes.
     const bonusSnap = await db.ref('bonusCodes').child(normalized).once('value');
     if (bonusSnap.exists()) {
@@ -43,9 +44,7 @@ module.exports = async (req, res) => {
     const matched = Object.entries(entries).find(([id,item]) => {
       const value = item && typeof item === 'object' ? item.value : item;
       const stored = String(value || id).trim().toUpperCase();
-      // ADMIN generates codes with E39- prefix; accept the displayed suffix too.
-      // Match full values first or an unambiguous generated suffix.
-      return stored === normalized || (stored.startsWith('E39-') && stored.slice(4) === normalized);
+      return stored === normalized;
     });
     if (!matched) return res.status(200).json({valid:false,reason:'invalid_code'});
     // Any code displayed in ADMIN's 100 CODE list belongs to this category,
