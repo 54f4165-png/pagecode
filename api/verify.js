@@ -21,6 +21,15 @@ module.exports = async (req, res) => {
     if (verified.success !== true) return res.status(200).json({valid:false,reason:'verification_failed'});
     const {db} = require('./_firebase');
     const normalized = code.trim().toUpperCase();
+    // Bonus codes are separate from deposit requirements and regular generated codes.
+    const bonusSnap = await db.ref('bonusCodes').child(normalized).once('value');
+    if (bonusSnap.exists()) {
+      const bonus = bonusSnap.val();
+      const amount = Number(bonus && typeof bonus === 'object' ? bonus.amount : bonus);
+      if (!Number.isSafeInteger(amount) || amount < 0 || amount > 1000000000)
+        return res.status(200).json({valid:false,reason:'invalid_code'});
+      return res.status(200).json({valid:true,type:'bonus',amount,currency:'VND'});
+    }
     const depositSnap = await db.ref('depositCodes').child(normalized).once('value');
     if (depositSnap.exists()) {
       const entry = depositSnap.val();
