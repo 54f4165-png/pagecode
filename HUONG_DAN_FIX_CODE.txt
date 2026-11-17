@@ -1,0 +1,5 @@
+E39 USER - FIX XAC MINH CODE
+- Cac ma trong CỘNG CODE phai co so tien > 0 de duoc su dung; ma chua gan tien khong bi danh dau da su dung.
+- CODE hop le chi duoc nhap mot lan tren toan he thong; usedCodes la lich su chong dung lai.
+- Ma da ton tai trong usedCodes se van bao het han, ke ca bonusCodes.status = available. Ban nay KHONG tu dong xoa du lieu da su dung.
+- Neu ma chua dung nhung da bi ghi nhan nham, can doi chieu ban ghi va xac minh truoc khi xoa RIENG ban ghi do.

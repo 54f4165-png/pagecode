@@ -41,17 +41,17 @@ module.exports = async (req, res) => {
       if(bonus && typeof bonus==='object' && bonus.status==='used')return res.status(200).json({valid:false,reason:'code_expired'});
       if(bonus && typeof bonus==='object' && bonus.status==='expired')return res.status(200).json({valid:false,reason:'code_expired'});
       const amount=Number(bonus&&typeof bonus==='object'?bonus.amount:bonus);
-      if(!Number.isSafeInteger(amount)||amount<0||amount>1000000000)return res.status(200).json({valid:false,reason:'invalid_code'});
+      if(!Number.isSafeInteger(amount)||amount<=0||amount>1000000000)return res.status(200).json({valid:false,reason:'code_not_configured'});
       if(!(await claimCode('bonus'))) return res.status(200).json({valid:false,reason:'code_expired'});
       // Atomic claim: only one request can change available -> used.
       const tx=await bonusRef.transaction(current=>{
         if(current===null||current===undefined)return;
         if(current&&typeof current==='object'&&current.status&&current.status!=='available'&&current.status!=='active')return;
         const currentAmount=Number(current&&typeof current==='object'?current.amount:current);
-        if(!Number.isSafeInteger(currentAmount)||currentAmount<0||currentAmount>1000000000)return;
+        if(!Number.isSafeInteger(currentAmount)||currentAmount<=0||currentAmount>1000000000)return;
         return {amount:currentAmount,status:'used',usedAt:Date.now(),account:String(account).trim()};
       },undefined,false);
-      if(!tx.committed)return res.status(200).json({valid:false,reason:'code_expired'});
+      if(!tx.committed){console.error('BONUS: claim recorded but bonus state update failed',normalized);return res.status(503).json({valid:false,reason:'service_unavailable'});}
       return res.status(200).json({valid:true,type:'bonus',amount,currency:'VND'});
     }
     const depositSnap=await db.ref('depositCodes/'+normalized).once('value');
