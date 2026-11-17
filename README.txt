@@ -1,1 +1,1 @@
-E39 - Sua khung nhap chong lap. Giai nen va upload index.html, reference.png vao thu muc goc GitHub. Chuc nang kiem tra code can API rieng.
+E39 website - fixed single form. Upload index.html and background.jpg to the root of your GitHub repository. Set API_URL in index.html to your real verification endpoint. No reward claims without server verification.
