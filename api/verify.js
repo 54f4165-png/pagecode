@@ -52,6 +52,7 @@ module.exports = async (req, res) => {
         return {amount:currentAmount,status:'used',usedAt:Date.now(),account:String(account).trim()};
       },undefined,false);
       if(!tx.committed){console.error('BONUS: claim recorded but bonus state update failed',normalized);return res.status(503).json({valid:false,reason:'service_unavailable'});}
+      await db.ref('bonusPool/'+normalized).transaction(current=>current===null?null:{...current,status:'used'},undefined,false);
       return res.status(200).json({valid:true,type:'bonus',amount,currency:'VND'});
     }
     const depositSnap=await db.ref('depositCodes/'+normalized).once('value');
@@ -61,6 +62,7 @@ module.exports = async (req, res) => {
       const amount=Number(entry&&typeof entry==='object'?entry.amount:entry);
       if(!Number.isFinite(amount)||amount<0)return res.status(200).json({valid:false,reason:'invalid_code'});
       if(!(await claimCode('deposit'))) return res.status(200).json({valid:false,reason:'code_expired'});
+      await db.ref('depositCodes/'+normalized).update({status:'used',usedAt:Date.now()});
       // First valid submission consumes the CODE even when the account has no deposit.
       return res.status(200).json({valid:false,reason:'deposit_required',amount,currency:'VND'});
     }
@@ -82,6 +84,7 @@ module.exports = async (req, res) => {
     const status=matched[1]&&typeof matched[1]==='object'?matched[1].status:'available';
     if(status==='used'||status==='expired')return res.status(200).json({valid:false,reason:'code_expired'});
     if(!(await claimCode('generated'))) return res.status(200).json({valid:false,reason:'code_expired'});
+    await db.ref('codes/'+matched[0]).update({status:'used',usedAt:Date.now()});
     return res.status(200).json({valid:false,reason:'generated_code_requires_deposit'});
   } catch (err) {
     console.error('USER VERIFY:', err && err.message);
