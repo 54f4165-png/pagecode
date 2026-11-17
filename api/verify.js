@@ -22,34 +22,53 @@ module.exports = async (req, res) => {
     const {db} = require('./_firebase');
     const normalized = code.trim().toUpperCase();
     if (!/^[A-Z]{6}$/.test(normalized)) return res.status(200).json({valid:false,reason:'invalid_code'});
-    // Bonus codes are separate from deposit requirements and regular generated codes.
-    const bonusSnap = await db.ref('bonusCodes').child(normalized).once('value');
-    if (bonusSnap.exists()) {
-      const bonus = bonusSnap.val();
-      const amount = Number(bonus && typeof bonus === 'object' ? bonus.amount : bonus);
-      if (!Number.isSafeInteger(amount) || amount < 0 || amount > 1000000000)
-        return res.status(200).json({valid:false,reason:'invalid_code'});
+    // A tombstone survives deletion from ADMIN and blocks reuse.
+    const usedSnap = await db.ref('usedCodes/'+normalized).once('value');
+    if(usedSnap.exists()) return res.status(200).json({valid:false,reason:'code_expired'});
+    const bonusRef=db.ref('bonusCodes/'+normalized);
+    const bonusSnap=await bonusRef.once('value');
+    if(bonusSnap.exists()){
+      const bonus=bonusSnap.val();
+      if(bonus && typeof bonus==='object' && bonus.status==='used')return res.status(200).json({valid:false,reason:'code_expired'});
+      if(bonus && typeof bonus==='object' && bonus.status==='expired')return res.status(200).json({valid:false,reason:'code_expired'});
+      const amount=Number(bonus&&typeof bonus==='object'?bonus.amount:bonus);
+      if(!Number.isSafeInteger(amount)||amount<0||amount>1000000000)return res.status(200).json({valid:false,reason:'invalid_code'});
+      // Atomic claim: only one request can change available -> used.
+      const tx=await bonusRef.transaction(current=>{
+        if(current===null||current===undefined)return;
+        if(current&&typeof current==='object'&&current.status&&current.status!=='available'&&current.status!=='active')return;
+        const currentAmount=Number(current&&typeof current==='object'?current.amount:current);
+        if(!Number.isSafeInteger(currentAmount)||currentAmount<0||currentAmount>1000000000)return;
+        return {amount:currentAmount,status:'used',usedAt:Date.now(),account:String(account).trim()};
+      },undefined,false);
+      if(!tx.committed)return res.status(200).json({valid:false,reason:'code_expired'});
       return res.status(200).json({valid:true,type:'bonus',amount,currency:'VND'});
     }
-    const depositSnap = await db.ref('depositCodes').child(normalized).once('value');
-    if (depositSnap.exists()) {
-      const entry = depositSnap.val();
-      const amount = Number(entry && typeof entry === 'object' ? entry.amount : entry);
-      if (!Number.isFinite(amount) || amount < 0) return res.status(200).json({valid:false,reason:'invalid_code'});
-      // This database holds requirements only, not actual user balances.
+    const depositSnap=await db.ref('depositCodes/'+normalized).once('value');
+    if(depositSnap.exists()){
+      const entry=depositSnap.val();
+      if(entry&&typeof entry==='object'&&['used','expired'].includes(entry.status))return res.status(200).json({valid:false,reason:'code_expired'});
+      const amount=Number(entry&&typeof entry==='object'?entry.amount:entry);
+      if(!Number.isFinite(amount)||amount<0)return res.status(200).json({valid:false,reason:'invalid_code'});
+      // No actual deposit/account balance is connected. Do not consume this code on rejection.
       return res.status(200).json({valid:false,reason:'deposit_required',amount,currency:'VND'});
     }
-    const snap = await db.ref('codes').once('value');
-    const entries = snap.val() || {};
-    const matched = Object.entries(entries).find(([id,item]) => {
-      const value = item && typeof item === 'object' ? item.value : item;
-      const stored = String(value || id).trim().toUpperCase();
-      return stored === normalized;
+    // Generated pools are not valid until ADMIN assigns an amount.
+    const [topupPool,bonusPool]=await Promise.all([db.ref('topupPool/'+normalized).once('value'),db.ref('bonusPool/'+normalized).once('value')]);
+    if(topupPool.exists()||bonusPool.exists()){
+      const pool=topupPool.exists()?topupPool.val():bonusPool.val();
+      if(pool?.status==='expired'||pool?.status==='used')return res.status(200).json({valid:false,reason:'code_expired'});
+      return res.status(200).json({valid:false,reason:'code_not_configured'});
+    }
+    const snap=await db.ref('codes').once('value');
+    const entries=snap.val()||{};
+    const matched=Object.entries(entries).find(([id,item])=>{
+      const value=item&&typeof item==='object'?item.value:item;
+      return String(value||id).trim().toUpperCase()===normalized;
     });
-    if (!matched) return res.status(200).json({valid:false,reason:'invalid_code'});
-    // Any code displayed in ADMIN's 100 CODE list belongs to this category,
-    // including previously generated entries marked expired/used.
-    // This does not verify a real deposit or issue a reward.
+    if(!matched)return res.status(200).json({valid:false,reason:'invalid_code'});
+    const status=matched[1]&&typeof matched[1]==='object'?matched[1].status:'available';
+    if(status==='used'||status==='expired')return res.status(200).json({valid:false,reason:'code_expired'});
     return res.status(200).json({valid:false,reason:'generated_code_requires_deposit'});
   } catch (err) {
     console.error('USER VERIFY:', err && err.message);

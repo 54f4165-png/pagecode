@@ -1,0 +1,23 @@
+E39 - NANG CAP 3 TAB / CODE 6 CHU
+
+ADMIN:
+- TAB 100 CODE: tao 100 ma moi va tai TXT; ma da het han co the xoa.
+- TAB CODE NAP: danh sach 100 ma rieng, tao/tai TXT; bam CHON de dua ma vao bang nhap ma + so tien; bam LUU.
+- TAB CONG CODE: tuong tu, co the dieu chinh so tien cho tung ma.
+- Ma giua cac danh sach khong duoc trung. Ma cu da gan so tien van duoc giu khi tao dot moi.
+- Ma da dung/hhet han co nut XOA; du lieu usedCodes giu dau vet chong tai su dung.
+
+USER:
+- CONG CODE duoc ghi nhan su dung ngay khi API xac minh thanh cong; nhap lai bao CODE DA HET HAN.
+- CODE NAP chi thong bao yeu cau nap, khong danh dau da dung vi chua ket noi so du/nap tien thuc te.
+- CODE trong danh sach 100 thong bao chua nap tien, khong bi tieu thu.
+- CODE moi tao o bang ben trai chua duoc kich hoat cho den khi ADMIN gan so tien.
+- Giao dien goc duoc giu, chi them bang quan ly trong ADMIN.
+
+TRIEN KHAI:
+- ADMIN -> Vercel admincode; USER -> Vercel pagecode.
+- Giu nguyen cac bien moi truong Firebase, Turnstile, ADMIN_UIDS dang su dung.
+- Firebase Realtime Database can cho phep Firebase Admin SDK doc/ghi cac node: codes, depositCodes, bonusCodes, topupPool, bonusPool, usedCodes.
+- Khong xoa node usedCodes neu muon ngan ma da dung duoc dung lai.
+- Nen sao luu Firebase truoc khi cap nhat.
+- Chua test truc tiep tren Firebase/Vercel thuc te.
