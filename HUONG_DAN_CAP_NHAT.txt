@@ -1,0 +1,10 @@
+E39 - Ban sua khung xac minh Turnstile
+
+1. Giai nen ZIP, tai toan bo file va thu muc api len thu muc goc repository GitHub.
+2. Kiem tra config.js: Site Key phai khop voi widget E39-CODE trong Cloudflare.
+3. Tren Vercel > Project > Settings > Environment Variables, them TURNSTILE_SECRET_KEY voi Secret Key tu Cloudflare (KHONG dua vao GitHub).
+4. Redeploy Vercel sau khi them bien moi truong.
+5. Dam bao hostname pagecode-beta.vercel.app duoc cho phep trong widget Turnstile.
+6. api/verify.js hien chi xac minh Turnstile. Chua co co so du lieu tai khoan / code / gia tri thuong, nen khong tu dong bao nhan thuong thanh cong.
+
+Da sua: dung kich thuoc Turnstile normal 300x65, danh hang rieng cho widget, khong che input/nut, giu anh nen va giao dien desktop/mobile.
