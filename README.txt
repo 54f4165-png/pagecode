@@ -1,7 +1,1 @@
-E39 - Trang nhập code
-
-Mở index.html để xem trang web.
-Triển khai: tải toàn bộ nội dung thư mục lên GitHub hoặc Vercel (static website).
-Ảnh reference.png được dùng làm nền desktop để giữ hình ảnh đúng theo ảnh mẫu.
-Thay các URL trong biến links của index.html để kích hoạt menu.
-Chức năng xác minh code cần API/backend riêng. Hiện tại chỉ kiểm tra ô nhập và hiển thị thông báo chưa kết nối.
+E39 - Giao dien nang cap thong bao ket qua\n\n1. Upload index.html va reference.png vao thu muc goc GitHub.\n2. Website hien modal loi hoac thanh cong theo du lieu tra ve tu API.\n3. Mo index.html va thay const API_URL = ''; bang URL API HTTPS cua ban.\n4. API POST nhan JSON {account,code}; tra {valid:true,amount:58,currency:"VND"} neu xac minh thanh cong; hoac {valid:false,reason:"invalid_code"} / reason:"account_not_found".\n5. Khi chua co API, website KHONG tu bao thanh cong hay phat thuong gia.\n6. Khong dua khoa API hoac danh sach code hop le vao frontend.\n
