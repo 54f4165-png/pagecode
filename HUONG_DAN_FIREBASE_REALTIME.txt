@@ -1,0 +1,14 @@
+E39 USER - FIREBASE REALTIME DATABASE
+
+Vercel > project pagecode > Settings > Environment Variables (Production):
+FIREBASE_SERVICE_ACCOUNT_JSON = full Firebase service account JSON (secret; never commit)
+TURNSTILE_SECRET_KEY = Cloudflare Turnstile secret key
+
+Public Turnstile site key is in config.js. Configure the domain in Cloudflare Turnstile.
+Firebase project: code-62406
+Database: https://code-62406-default-rtdb.asia-southeast1.firebasedatabase.app
+
+Read paths: codes, depositCodes. No Firestore or E39_CODES_JSON is required.
+CODE NAP shows the configured deposit requirement only; it does NOT verify a real balance.
+Available codes are validated only; no real reward is paid and no code is marked used.
+Deploy the folder as a Vercel project root and redeploy after setting environment variables.
