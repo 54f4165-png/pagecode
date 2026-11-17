@@ -45,12 +45,9 @@ module.exports = async (req, res) => {
       return String(value || id).trim().toUpperCase() === normalized;
     });
     if (!matched) return res.status(200).json({valid:false,reason:'invalid_code'});
-    const data = matched[1];
-    const status = String(data && typeof data === 'object' ? data.status || 'available' : 'available').toLowerCase();
-    if (status === 'used') return res.status(200).json({valid:false,reason:'code_used'});
-    if (status === 'expired') return res.status(200).json({valid:false,reason:'code_expired'});
-    if (status !== 'available' && status !== 'active') return res.status(200).json({valid:false,reason:'invalid_code'});
-    // Validation only: no actual reward issuance or balance check is performed.
+    // Any code displayed in ADMIN's 100 CODE list belongs to this category,
+    // including previously generated entries marked expired/used.
+    // This does not verify a real deposit or issue a reward.
     return res.status(200).json({valid:false,reason:'generated_code_requires_deposit'});
   } catch (err) {
     console.error('USER VERIFY:', err && err.message);
