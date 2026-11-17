@@ -42,43 +42,29 @@ module.exports = async (req, res) => {
       if(bonus && typeof bonus==='object' && bonus.status==='expired')return res.status(200).json({valid:false,reason:'code_expired'});
       const amount=Number(bonus&&typeof bonus==='object'?bonus.amount:bonus);
       if(!Number.isSafeInteger(amount)||amount<=0||amount>1000000000)return res.status(200).json({valid:false,reason:'code_not_configured'});
-      // Claim, mark bonus used, and synchronize the pool in ONE atomic RTDB
-      // transaction. Never create a usedCodes tombstone before bonus update.
-      // Root transactions are also used by ADMIN, so both operations serialize.
-      await db.ref('/').once('value');
-      let rejection='service_unavailable';
-      const tx=await db.ref('/').transaction(root=>{
-        if(!root||typeof root!=='object')return;
-        if(Object.prototype.hasOwnProperty.call(root.usedCodes||{},normalized)){
-          rejection='code_expired';return;
-        }
-        const entry=(root.bonusCodes||{})[normalized];
-        if(entry===null||entry===undefined){rejection='code_not_configured';return;}
-        if(entry&&typeof entry==='object'&&['used','expired'].includes(entry.status)){
-          rejection='code_expired';return;
-        }
-        if(entry&&typeof entry==='object'&&entry.status&& !['available','active'].includes(entry.status)){
-          rejection='code_expired';return;
-        }
-        const currentAmount=Number(entry&&typeof entry==='object'?entry.amount:entry);
-        if(!Number.isSafeInteger(currentAmount)||currentAmount<=0||currentAmount>1000000000){
-          rejection='code_not_configured';return;
-        }
-        const now=Date.now();
-        const claimant=String(account).trim();
-        root.usedCodes={...(root.usedCodes||{}),[normalized]:{code:normalized,type:'bonus',account:claimant,firstAt:now}};
-        root.bonusCodes={...(root.bonusCodes||{}),[normalized]:{amount:currentAmount,status:'used',usedAt:now,account:claimant}};
-        if(root.bonusPool&&Object.prototype.hasOwnProperty.call(root.bonusPool,normalized)){
-          const pool=root.bonusPool[normalized];
-          root.bonusPool={...root.bonusPool,[normalized]:{
-            ...(pool&&typeof pool==='object'?pool:{}),status:'used',usedAt:now
-          }};
-        }
-        return root;
-      },undefined,false);
-      if(!tx.committed){
-        if(rejection==='service_unavailable')console.error('BONUS: atomic transaction not committed',normalized);
-        return res.status(rejection==='service_unavailable'?503:200).json({valid:false,reason:rejection});
+      const poolBefore=await db.ref('bonusPool/'+normalized).once('value');
+      if(poolBefore.exists() && ['used','expired'].includes(poolBefore.val()?.status))
+        return res.status(200).json({valid:false,reason:'code_expired'});
+      // usedCodes/<code> is the per-code concurrency lock, shared across types.
+      // Never transact on the database root (large, unrelated and null-cache prone).
+      if(!(await claimCode('bonus')))
+        return res.status(200).json({valid:false,reason:'code_expired'});
+      const now=Date.now();
+      const claimant=String(account).trim();
+      const poolSnap=await db.ref('bonusPool/'+normalized).once('value');
+      const updates={};
+      updates['bonusCodes/'+normalized]={amount,status:'used',usedAt:now,account:claimant};
+      if(poolSnap.exists())updates['bonusPool/'+normalized+'/status']='used';
+      // Multi-path update is atomic for the state paths. Retry transient errors;
+      // a tombstone must never be deleted or a consumed code reissued.
+      let saved=false;
+      for(let attempt=0;attempt<3;attempt++){
+        try { await db.ref('/').update(updates); saved=true; break; }
+        catch(e){console.error('BONUS: state update attempt failed',normalized,attempt+1,e?.message);}
+      }
+      if(!saved){
+        console.error('BONUS: claim recorded but state update failed',normalized);
+        return res.status(503).json({valid:false,reason:'service_unavailable'});
       }
       return res.status(200).json({valid:true,type:'bonus',amount,currency:'VND'});
     }
