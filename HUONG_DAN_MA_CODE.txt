@@ -1,0 +1,12 @@
+E39 - HUONG DAN CAU HINH MA CODE
+
+1. Vercel > Project > Settings > Environment Variables
+2. TURNSTILE_SECRET_KEY = Secret Key Cloudflare (KHONG dua len GitHub).
+3. E39_CODES_JSON = JSON tren 1 dong, vi du:
+{"ABC123":{"status":"expired"},"XYZ456":{"status":"used"},"GOOD789":{"status":"active","amount":58,"currency":"VND","accounts":["testuser"]}}
+4. Redeploy tren Vercel.
+
+Luu y: Danh sach tren chi la vi du, KHONG phai code that.
+Trang web khong tu dong danh dau code da dung hay phat thuong.
+Can ket noi database neu muon quan ly su dung code mot lan va cap nhat theo thoi gian thuc.
+Khong cong khai danh sach ma trong GitHub.

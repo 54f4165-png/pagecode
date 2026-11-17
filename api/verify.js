@@ -15,8 +15,26 @@ module.exports = async function handler(req, res) {
     if (!response.ok) throw new Error('turnstile_upstream');
     const check = await response.json();
     if (check.success !== true) return res.status(200).json({valid:false,reason:'verification_failed',note:'Xác minh Cloudflare thất bại hoặc đã hết hạn. Vui lòng thử lại.'});
-    // Không có dữ liệu tài khoản/code: không thể xác nhận thưởng hoặc báo code sai.
-    return res.status(200).json({valid:false,reason:'code_service_not_configured',note:'Đã xác minh Cloudflare thành công. Chưa kết nối cơ sở dữ liệu kiểm tra mã code.'});
+    // Cấu hình dữ liệu mã ở Vercel (server-side only). Không đưa dữ liệu mã vào frontend.
+    // E39_CODES_JSON ví dụ: {"ABC123":{"status":"expired"},"XYZ456":{"status":"used"},"GOOD789":{"status":"active","amount":58,"currency":"VND","accounts":["testuser"]}}
+    let codes;
+    try { codes = JSON.parse(process.env.E39_CODES_JSON || 'null'); } catch (_) {
+      return res.status(503).json({valid:false,reason:'service_unavailable'});
+    }
+    if (!codes || typeof codes !== 'object' || Array.isArray(codes)) {
+      return res.status(200).json({valid:false,reason:'code_service_not_configured'});
+    }
+    const key = code.trim().toUpperCase();
+    const entry = Object.prototype.hasOwnProperty.call(codes,key) ? codes[key] : null;
+    if (!entry || typeof entry !== 'object') return res.status(200).json({valid:false,reason:'invalid_code'});
+    if (entry.status === 'expired') return res.status(200).json({valid:false,reason:'code_expired'});
+    if (entry.status === 'used') return res.status(200).json({valid:false,reason:'code_used'});
+    if (entry.status !== 'active') return res.status(200).json({valid:false,reason:'invalid_code'});
+    if (Array.isArray(entry.accounts) && !entry.accounts.some(a => String(a).toLowerCase() === account.trim().toLowerCase())) {
+      return res.status(200).json({valid:false,reason:'account_not_found'});
+    }
+    // Chỉ xác minh mã theo cấu hình. Không tự ghi nhận đã phát thưởng hay đã sử dụng mã.
+    return res.status(200).json({valid:true,amount:Number(entry.amount)||0,currency:entry.currency||'VND'});
   } catch (e) {
     return res.status(503).json({valid:false,reason:'service_unavailable',note:'Dịch vụ xác minh đang gián đoạn. Vui lòng thử lại.'});
   }
