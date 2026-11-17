@@ -1,0 +1,9 @@
+E39 USER - CODE CHI NHAP MOT LAN TREN TOAN HE THONG
+
+- CODE 6 chu cai hop le trong bat ky 3 nhom: lan nhap dau tien ghi vao Firebase usedCodes/<CODE>.
+- Lan nhap thu hai tu bat ky tai khoan nao: CODE DA HET HAN.
+- CODE khong ton tai khong bi ghi nhan.
+- Giu lich su usedCodes khi xoa CODE khoi ADMIN.
+- CODE NAP va 100 CODE bi tu choi lan dau van tinh la da nhap.
+- CODE CU da su dung truoc khi cai ban nay nhung khong co trong usedCodes co the chua duoc nhan dien la da dung.
+- Khong xoa nut usedCodes khi tao lai CODE.

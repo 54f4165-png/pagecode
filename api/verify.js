@@ -21,6 +21,15 @@ module.exports = async (req, res) => {
     if (verified.success !== true) return res.status(200).json({valid:false,reason:'verification_failed'});
     const {db} = require('./_firebase');
     const normalized = code.trim().toUpperCase();
+    // A CODE can be submitted only once globally, regardless of account or type.
+    // RTDB transaction prevents two simultaneous requests from claiming the same CODE.
+    const claimCode=async(type)=>{
+      const ref=db.ref('usedCodes/'+normalized);
+      const tx=await ref.transaction(current=>current===null?{
+        code:normalized,type,account:String(account).trim(),firstAt:Date.now()
+      }:undefined,undefined,false);
+      return tx.committed;
+    };
     if (!/^[A-Z]{6}$/.test(normalized)) return res.status(200).json({valid:false,reason:'invalid_code'});
     // A tombstone survives deletion from ADMIN and blocks reuse.
     const usedSnap = await db.ref('usedCodes/'+normalized).once('value');
@@ -33,6 +42,7 @@ module.exports = async (req, res) => {
       if(bonus && typeof bonus==='object' && bonus.status==='expired')return res.status(200).json({valid:false,reason:'code_expired'});
       const amount=Number(bonus&&typeof bonus==='object'?bonus.amount:bonus);
       if(!Number.isSafeInteger(amount)||amount<0||amount>1000000000)return res.status(200).json({valid:false,reason:'invalid_code'});
+      if(!(await claimCode('bonus'))) return res.status(200).json({valid:false,reason:'code_expired'});
       // Atomic claim: only one request can change available -> used.
       const tx=await bonusRef.transaction(current=>{
         if(current===null||current===undefined)return;
@@ -50,7 +60,8 @@ module.exports = async (req, res) => {
       if(entry&&typeof entry==='object'&&['used','expired'].includes(entry.status))return res.status(200).json({valid:false,reason:'code_expired'});
       const amount=Number(entry&&typeof entry==='object'?entry.amount:entry);
       if(!Number.isFinite(amount)||amount<0)return res.status(200).json({valid:false,reason:'invalid_code'});
-      // No actual deposit/account balance is connected. Do not consume this code on rejection.
+      if(!(await claimCode('deposit'))) return res.status(200).json({valid:false,reason:'code_expired'});
+      // First valid submission consumes the CODE even when the account has no deposit.
       return res.status(200).json({valid:false,reason:'deposit_required',amount,currency:'VND'});
     }
     // Generated pools are not valid until ADMIN assigns an amount.
@@ -58,6 +69,7 @@ module.exports = async (req, res) => {
     if(topupPool.exists()||bonusPool.exists()){
       const pool=topupPool.exists()?topupPool.val():bonusPool.val();
       if(pool?.status==='expired'||pool?.status==='used')return res.status(200).json({valid:false,reason:'code_expired'});
+      if(!(await claimCode(topupPool.exists()?'topup_pool':'bonus_pool'))) return res.status(200).json({valid:false,reason:'code_expired'});
       return res.status(200).json({valid:false,reason:'code_not_configured'});
     }
     const snap=await db.ref('codes').once('value');
@@ -69,6 +81,7 @@ module.exports = async (req, res) => {
     if(!matched)return res.status(200).json({valid:false,reason:'invalid_code'});
     const status=matched[1]&&typeof matched[1]==='object'?matched[1].status:'available';
     if(status==='used'||status==='expired')return res.status(200).json({valid:false,reason:'code_expired'});
+    if(!(await claimCode('generated'))) return res.status(200).json({valid:false,reason:'code_expired'});
     return res.status(200).json({valid:false,reason:'generated_code_requires_deposit'});
   } catch (err) {
     console.error('USER VERIFY:', err && err.message);
