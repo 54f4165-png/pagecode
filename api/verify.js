@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
       typeof turnstileToken !== 'string' || !turnstileToken || turnstileToken.length > 4096)
     return res.status(400).json({valid:false,reason:'invalid_request'});
   const secret = process.env.TURNSTILE_SECRET_KEY;
-  if (!secret) return res.status(503).json({valid:false,reason:'service_unavailable'});
+  if (!secret) { console.error('USER VERIFY: missing TURNSTILE_SECRET_KEY'); return res.status(503).json({valid:false,reason:'turnstile_not_configured'}); }
   try {
     const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
       method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'},

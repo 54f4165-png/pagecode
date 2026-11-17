@@ -1,0 +1,14 @@
+E39 USER - SUA LOI HTTP 503
+
+Da xac nhan api/verify.js tra 503 ngay neu thieu TURNSTILE_SECRET_KEY.
+
+Vercel > pagecode > Environment Variables > Production:
+1. FIREBASE_SERVICE_ACCOUNT_JSON: JSON cua service account Firebase code-62406.
+2. TURNSTILE_SECRET_KEY: Secret Key cua Cloudflare Turnstile widget co Site Key trong config.js.
+
+Khong dua secret key vao GitHub, HTML hay tin nhan.
+Sau khi luu bien, Redeploy Production.
+Kiem tra hostname pagecode-beta.vercel.app duoc cho phep trong Cloudflare Turnstile.
+
+Ban sua nay giu giao dien, bo sung thong bao rieng neu thieu Turnstile secret va log loi cau hinh.
+Neu van loi, xem Runtime Logs /api/verify.
