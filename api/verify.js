@@ -69,7 +69,7 @@ module.exports = async (req, res) => {
     if(topupPool.exists()||bonusPool.exists()){
       const pool=topupPool.exists()?topupPool.val():bonusPool.val();
       if(pool?.status==='expired'||pool?.status==='used')return res.status(200).json({valid:false,reason:'code_expired'});
-      if(!(await claimCode(topupPool.exists()?'topup_pool':'bonus_pool'))) return res.status(200).json({valid:false,reason:'code_expired'});
+      // Unassigned pool codes are NOT redeemed. ADMIN must assign an amount first.
       return res.status(200).json({valid:false,reason:'code_not_configured'});
     }
     const snap=await db.ref('codes').once('value');
