@@ -51,7 +51,7 @@ module.exports = async (req, res) => {
     if (status === 'expired') return res.status(200).json({valid:false,reason:'code_expired'});
     if (status !== 'available' && status !== 'active') return res.status(200).json({valid:false,reason:'invalid_code'});
     // Validation only: no actual reward issuance or balance check is performed.
-    return res.status(200).json({valid:true,amount:0,currency:'VND'});
+    return res.status(200).json({valid:false,reason:'generated_code_requires_deposit'});
   } catch (err) {
     console.error('USER VERIFY:', err && err.message);
     return res.status(503).json({valid:false,reason:'service_unavailable'});
