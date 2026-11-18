@@ -50,6 +50,35 @@
  .line{min-height:46px;border-radius:10px}
  .submit{min-height:48px;width:min(310px,95%)}
 }
+
+/* V16: Mobile-only layout. Desktop V15 rules remain unchanged. */
+@media (max-width:700px){
+ html,body{width:100%;overflow-x:hidden;background:#fff8ee}
+ .site-header{height:auto;min-height:0;gap:8px;padding:10px 8px 12px;background:#fff;box-shadow:0 2px 8px #b9742533}
+ .logo{font-size:40px;letter-spacing:-2px}
+ .nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;width:100%;max-width:480px}
+ .nav a{display:flex;flex-direction:column;justify-content:center;gap:4px;font-size:clamp(10px,2.8vw,13px);line-height:1.15;text-align:center}
+ .nav .ico{font-size:20px;width:31px;height:31px;display:grid;place-items:center;margin:auto}
+ .stage{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;width:100%;height:auto;min-height:calc(100svh - 105px);aspect-ratio:auto;max-width:none;margin:0;padding:0 12px 36px;background-image:none;background-color:#fff6e7}
+ .stage::before{content:'';display:block;flex:none;align-self:stretch;width:calc(100% + 24px);margin:0 -12px;background-image:url('e39-v12-approved-background.webp');background-position:center top;background-repeat:no-repeat;background-size:100% auto;aspect-ratio:1787/789;box-shadow:0 5px 15px #b36b2033}
+ .center{position:relative;left:auto;top:auto;transform:none;z-index:1;display:block;width:min(100%,440px);max-width:none;margin:14px auto 0;padding:0;background:none;border:0;box-shadow:none}
+ .code-panel{padding:10px;background:linear-gradient(145deg,#ffe37a,#ffb21d);border:2px solid #ed961a;border-radius:23px;box-shadow:0 5px 0 #cb7615,0 12px 24px #ad621d38}
+ .code-form{padding:18px 14px 20px;background:linear-gradient(165deg,#fffefa,#fff7e8);border:2px solid #fff0c5;border-radius:17px;box-shadow:inset 0 0 12px #efad4340;gap:13px}
+ .group label{font-size:14px;margin:0 0 7px;color:#ed7109;font-weight:800}
+ .line{height:49px;min-height:49px;padding:0 12px;border:2px solid #ff972a;border-radius:10px;background:#fff}
+ .line input{font-size:16px}
+ .verification{min-height:70px;max-width:100%;overflow:visible}
+ .verify-widget{max-width:100%}
+ .submit{width:min(100%,305px);min-height:53px;font-size:20px;border:3px solid #ffe1a3;border-radius:30px;white-space:nowrap}
+}
+@media (max-width:360px){
+ .stage{padding-left:9px;padding-right:9px}
+ .stage::before{width:calc(100% + 18px);margin-left:-9px;margin-right:-9px}
+ .center{width:100%;padding:0;margin-top:12px}
+ .code-form{padding:15px 10px 18px}
+ .verification{transform:scale(.92);transform-origin:center}
+ .nav a{font-size:10px}
+}
 </style></head><body><header class="site-header"><div class="logo">E39</div><nav class="nav" aria-label="Điều hướng"><a href="#" data-link="home"><span class="ico">🏠</span>Trang Chủ</a><a href="#" data-link="contact"><span class="ico">📣</span>Liên Hệ</a><a href="#" data-link="telegram"><span class="ico">✈️</span>Telegram</a><a href="#" data-link="fanpage"><span class="ico">🟠</span>Fanpage</a></nav></header><main class="stage"><div class="center"><div class="code-panel"><form class="code-form" id="desktopForm"><div class="group"><label for="account">Nhập tên tài khoản</label><div class="line"><span>♟</span><input id="account" name="account" placeholder="Nhập tài khoản" required autocomplete="username"></div></div><div class="group"><label for="code">Điền mã code nhận thưởng</label><div class="line"><span>▣</span><input id="code" name="code" placeholder="Mã code" maxlength="6" minlength="6" pattern="[A-Za-z]{6}" required></div></div><div class="verification"><div class="verify-widget"></div><div class="verify-setup">Xác minh Cloudflare chưa được cấu hình</div></div><button class="submit" type="submit">KIỂM TRA NGAY</button></form></div></div></main><div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="dialog" id="dialog"><div class="status-icon" id="icon">❌</div><h2 id="resultTitle">NHẬP MÃ KHUYẾN MÃI</h2><p class="message" id="message">MÃ CODE KHÔNG HỢP LỆ</p><div class="reward" id="reward" hidden></div><div><button type="button" id="close">XÁC NHẬN</button></div><div class="note" id="note"></div></div></div><script src="config.js"></script><script>
 // Supply a secure server-side verification endpoint. Never embed valid codes or API secrets in public HTML.
 const API_URL='/api/verify';
