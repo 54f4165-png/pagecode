@@ -1,0 +1,1 @@
+E39 USER V12 - anh nen da duoc duyet, bo title va bang vang HTML trung lap. Giu nguyen api/verify.js, config.js va Turnstile. Can kiem tra tren PC va dien thoai truoc khi dua vao Production.

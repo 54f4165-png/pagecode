@@ -40,7 +40,28 @@
  .code-form{padding:20px 13px 19px;gap:12px}
 }
 @media(max-width:360px){.gift-restored{font-size:43px;margin-bottom:-14px}.code-panel{padding-top:27px}.code-form{padding:16px 10px}}
-</style></head><body><header class="site-header"><div class="logo">E39</div><nav class="nav" aria-label="Điều hướng"><a href="#" data-link="home"><span class="ico">🏠</span>Trang Chủ</a><a href="#" data-link="contact"><span class="ico">📣</span>Liên Hệ</a><a href="#" data-link="telegram"><span class="ico">✈️</span>Telegram</a><a href="#" data-link="fanpage"><span class="ico">🟠</span>Fanpage</a></nav></header><main class="stage"><div class="center"><div class="title-group"><div class="gift-restored" aria-hidden="true">🎁</div><h1 class="title"><img src="/e39-title-from-reference.png" alt="Page nhập code" loading="eager" decoding="async"></h1></div><div class="code-panel"><form class="code-form" id="desktopForm"><div class="group"><label for="account">Nhập tên tài khoản</label><div class="line"><span>♟</span><input id="account" name="account" placeholder="Nhập tài khoản" required autocomplete="username"></div></div><div class="group"><label for="code">Điền mã code nhận thưởng</label><div class="line"><span>▣</span><input id="code" name="code" placeholder="Mã code" maxlength="6" minlength="6" pattern="[A-Za-z]{6}" required></div></div><div class="verification"><div class="verify-widget"></div><div class="verify-setup">Xác minh Cloudflare chưa được cấu hình</div></div><button class="submit" type="submit">KIỂM TRA NGAY</button></form></div></div></main><div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="dialog" id="dialog"><div class="status-icon" id="icon">❌</div><h2 id="resultTitle">NHẬP MÃ KHUYẾN MÃI</h2><p class="message" id="message">MÃ CODE KHÔNG HỢP LỆ</p><div class="reward" id="reward" hidden></div><div><button type="button" id="close">XÁC NHẬN</button></div><div class="note" id="note"></div></div></div><script src="config.js"></script><script>
+
+/* V12: one approved artwork only. No duplicated title, gift, or gold frame. */
+.stage{background-image:url('e39-v12-approved-background.webp')!important;background-size:100% 100%!important;background-position:center top!important;min-height:0!important;aspect-ratio:1787 / 789;display:block!important;padding:0!important;max-width:1787px;margin:0 auto}
+.center{position:absolute!important;top:32%;left:50%;transform:translateX(-50%);width:36.5%!important;max-width:none!important;z-index:1}
+.title-group,.title,.gift-restored{display:none!important}
+.code-panel{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important}
+.code-form{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important;gap:8px!important}
+.group label{font-size:clamp(11px,.95vw,16px);margin-bottom:4px}
+.line{height:clamp(32px,3vw,49px);background:#fffdf9e8}
+.verification{min-height:68px}
+.submit{min-height:49px}
+@media(max-width:700px){
+.site-header{min-height:80px}
+.stage{height:850px!important;aspect-ratio:auto!important;background-size:auto 850px!important;background-position:center top!important;min-height:850px!important}
+.center{top:30%;width:min(82vw,440px)!important}
+.code-form{gap:10px!important}
+.group label{font-size:14px}
+.line{height:46px}
+.submit{font-size:20px}
+}
+@media(max-width:380px){.center{width:85vw!important}.verification{transform:scale(.92);transform-origin:center}}
+</style></head><body><header class="site-header"><div class="logo">E39</div><nav class="nav" aria-label="Điều hướng"><a href="#" data-link="home"><span class="ico">🏠</span>Trang Chủ</a><a href="#" data-link="contact"><span class="ico">📣</span>Liên Hệ</a><a href="#" data-link="telegram"><span class="ico">✈️</span>Telegram</a><a href="#" data-link="fanpage"><span class="ico">🟠</span>Fanpage</a></nav></header><main class="stage"><div class="center"><div class="code-panel"><form class="code-form" id="desktopForm"><div class="group"><label for="account">Nhập tên tài khoản</label><div class="line"><span>♟</span><input id="account" name="account" placeholder="Nhập tài khoản" required autocomplete="username"></div></div><div class="group"><label for="code">Điền mã code nhận thưởng</label><div class="line"><span>▣</span><input id="code" name="code" placeholder="Mã code" maxlength="6" minlength="6" pattern="[A-Za-z]{6}" required></div></div><div class="verification"><div class="verify-widget"></div><div class="verify-setup">Xác minh Cloudflare chưa được cấu hình</div></div><button class="submit" type="submit">KIỂM TRA NGAY</button></form></div></div></main><div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="dialog" id="dialog"><div class="status-icon" id="icon">❌</div><h2 id="resultTitle">NHẬP MÃ KHUYẾN MÃI</h2><p class="message" id="message">MÃ CODE KHÔNG HỢP LỆ</p><div class="reward" id="reward" hidden></div><div><button type="button" id="close">XÁC NHẬN</button></div><div class="note" id="note"></div></div></div><script src="config.js"></script><script>
 // Supply a secure server-side verification endpoint. Never embed valid codes or API secrets in public HTML.
 const API_URL='/api/verify';
 // Dán Site Key công khai từ Cloudflare Turnstile (không dán Secret Key ở đây).
