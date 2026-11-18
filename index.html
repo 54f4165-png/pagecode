@@ -135,17 +135,13 @@
  .line input{flex:1 1 auto;min-width:0;max-width:100%;box-sizing:border-box}
  .verification{width:100%;max-width:100%}
 }
-/* V25: extend the usable light panel slightly on phones so labels, inputs,
-   verification and button fit within one aligned frame. Desktop is unchanged. */
+/* V26: the approved mobile artwork already contains the complete rounded
+   cream panel. Remove V25's extra pseudo-element which covered its lower rim.
+   Keep the live fields aligned within the original printed panel. */
 @media (max-width:700px){
- .center{isolation:isolate;top:20.2%;}
- .center::before{content:"";position:absolute;z-index:-1;
-   left:-4%;right:-4%;top:-14px;bottom:-18px;
-   background:rgba(255,250,239,.94);
-   border:2px solid rgba(255,244,210,.95);
-   border-radius:20px;
-   box-shadow:inset 0 0 12px rgba(236,170,54,.16);
-   pointer-events:none;}
+ .center{top:21.0%;isolation:auto}
+ .center::before,.center::after{content:none!important;display:none!important;
+   background:none!important;border:0!important;box-shadow:none!important}
  .code-form{gap:clamp(3px,.7vw,5px)}
  .group label{margin-bottom:4px}
 }
