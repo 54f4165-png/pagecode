@@ -79,6 +79,66 @@
  .verification{transform:scale(.92);transform-origin:center}
  .nav a{font-size:10px}
 }
+
+/* V17 MOBILE: the artwork is one continuous image; the functional form
+   is positioned inside its existing golden frame, never below the image.
+   Desktop styling and all verification JavaScript remain unchanged. */
+@media (max-width:700px) {
+  html,body {background:#fff7ed!important;overflow-x:hidden!important}
+  .site-header {
+    position:relative!important;z-index:3!important;display:flex!important;
+    flex-direction:column!important;align-items:center!important;
+    height:auto!important;min-height:0!important;padding:5px 0 0!important;
+    gap:0!important;background:#242424!important;box-shadow:none!important;
+  }
+  .logo {height:51px!important;display:flex!important;align-items:center!important;
+    color:#f58a23!important;font-size:44px!important;line-height:1!important}
+  .nav {display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;
+    width:100%!important;max-width:none!important;gap:0!important;
+    padding:8px 3px!important;background:#252525!important;border-top:1px solid #555!important}
+  .nav a {display:flex!important;flex-direction:row!important;justify-content:center!important;
+    align-items:center!important;gap:3px!important;font-size:clamp(9px,2.5vw,13px)!important;
+    color:#eee!important;white-space:nowrap!important;line-height:1.2!important}
+  .nav .ico {display:inline-flex!important;width:23px!important;height:23px!important;
+    font-size:17px!important;margin:0!important;align-items:center!important;justify-content:center!important}
+  .stage {
+    position:relative!important;display:block!important;width:100%!important;
+    height:180vw!important;min-height:0!important;max-width:none!important;
+    aspect-ratio:auto!important;margin:0!important;padding:0!important;
+    overflow:hidden!important;
+    background-image:url('e39-v12-approved-background.webp')!important;
+    background-repeat:no-repeat!important;background-position:center top!important;
+    background-size:100% 100%!important;background-color:#fff7ed!important;
+  }
+  .stage::before,.stage::after {content:none!important;display:none!important}
+  .center {
+    position:absolute!important;display:block!important;z-index:2!important;
+    left:50%!important;top:33%!important;transform:translateX(-50%)!important;
+    width:76%!important;max-width:none!important;margin:0!important;padding:0!important;
+    background:transparent!important;border:0!important;border-radius:0!important;
+    box-shadow:none!important;
+  }
+  .code-panel,.code-form {background:transparent!important;border:0!important;
+    border-radius:0!important;box-shadow:none!important;padding:0!important}
+  .code-form {display:flex!important;flex-direction:column!important;gap:clamp(3px,1.3vw,9px)!important}
+  .group label {display:block!important;font-size:clamp(10px,2.6vw,15px)!important;
+    line-height:1.1!important;font-weight:800!important;margin:0 0 3px!important;color:#e9750c!important}
+  .line {height:clamp(28px,7vw,46px)!important;min-height:0!important;
+    padding:0 7px!important;background:#fffdf9!important;border:2px solid #ff9226!important;
+    border-radius:8px!important}
+  .line input {font-size:clamp(12px,3.3vw,16px)!important;min-width:0!important}
+  .verification {width:100%!important;min-height:clamp(55px,14vw,72px)!important;
+    max-width:100%!important;transform:none!important;overflow:visible!important}
+  .verify-widget {max-width:100%!important;display:flex!important;justify-content:center!important}
+  .submit {align-self:center!important;width:min(82%,310px)!important;
+    min-height:clamp(33px,8vw,52px)!important;font-size:clamp(13px,3.8vw,21px)!important;
+    border-radius:30px!important;margin:0!important;white-space:nowrap!important}
+}
+@media(max-width:360px){
+  .center {top:32%!important;width:77%!important}
+  .verification {transform:scale(.88)!important;transform-origin:center top!important;
+    margin-bottom:-8px!important}
+}
 </style></head><body><header class="site-header"><div class="logo">E39</div><nav class="nav" aria-label="Điều hướng"><a href="#" data-link="home"><span class="ico">🏠</span>Trang Chủ</a><a href="#" data-link="contact"><span class="ico">📣</span>Liên Hệ</a><a href="#" data-link="telegram"><span class="ico">✈️</span>Telegram</a><a href="#" data-link="fanpage"><span class="ico">🟠</span>Fanpage</a></nav></header><main class="stage"><div class="center"><div class="code-panel"><form class="code-form" id="desktopForm"><div class="group"><label for="account">Nhập tên tài khoản</label><div class="line"><span>♟</span><input id="account" name="account" placeholder="Nhập tài khoản" required autocomplete="username"></div></div><div class="group"><label for="code">Điền mã code nhận thưởng</label><div class="line"><span>▣</span><input id="code" name="code" placeholder="Mã code" maxlength="6" minlength="6" pattern="[A-Za-z]{6}" required></div></div><div class="verification"><div class="verify-widget"></div><div class="verify-setup">Xác minh Cloudflare chưa được cấu hình</div></div><button class="submit" type="submit">KIỂM TRA NGAY</button></form></div></div></main><div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="dialog" id="dialog"><div class="status-icon" id="icon">❌</div><h2 id="resultTitle">NHẬP MÃ KHUYẾN MÃI</h2><p class="message" id="message">MÃ CODE KHÔNG HỢP LỆ</p><div class="reward" id="reward" hidden></div><div><button type="button" id="close">XÁC NHẬN</button></div><div class="note" id="note"></div></div></div><script src="config.js"></script><script>
 // Supply a secure server-side verification endpoint. Never embed valid codes or API secrets in public HTML.
 const API_URL='/api/verify';
