@@ -7,60 +7,30 @@
 @media(max-width:700px){.site-header{height:auto;min-height:95px;flex-direction:column;gap:7px;padding:7px 5px 9px}.logo{font-size:37px}.nav{gap:clamp(5px,2vw,14px);width:100%;justify-content:space-evenly}.nav a{font-size:clamp(10px,2.5vw,13px);gap:3px}.nav .ico{font-size:15px;padding:2px}.stage{min-height:calc(100svh - 95px);align-items:flex-start;padding:clamp(24px,7vh,75px) 12px 30px;background-position:center center;background-size:cover}.center{width:min(480px,100%)}.title{font-size:clamp(27px,7vw,39px);margin-bottom:10px}.gift{font-size:30px;margin-bottom:4px}.code-panel{padding:10px;border-radius:22px}.code-form{padding:17px 13px 18px;border-radius:17px;gap:11px}.group label{font-size:14px}.line{height:47px}.submit{font-size:20px}.verification{min-height:70px}}
 @media(max-width:360px){.nav a{font-size:10px}.nav .ico{font-size:13px}.stage{padding-left:7px;padding-right:7px}.code-form{padding:13px 9px}.title{font-size:26px}.verification{transform:scale(.91);transform-origin:center}}
 
-/* V9: tiêu đề 3D trắng viền cam như mẫu, đè nhẹ lên mép trên bảng vàng */
-.center{isolation:isolate}
-.title{position:relative;z-index:3;margin:0 0 -5px;font-family:Arial,Helvetica,sans-serif;font-size:clamp(42px,4.45vw,76px);font-weight:1000;font-style:italic;letter-spacing:-2.8px;line-height:1.05;white-space:nowrap;color:#fffaf1;-webkit-text-stroke:2.6px #d65a00;paint-order:stroke fill;text-shadow:2px 2px 0 #ff9c18,3px 5px 0 #e87b00,4px 8px 0 #a94b06,5px 11px 8px #71390b99;transform:scaleX(1.06)}
-.gift{display:block;position:relative;z-index:4;font-size:48px;line-height:1;margin-bottom:9px;font-style:normal;letter-spacing:0;-webkit-text-stroke:0;text-shadow:0 3px 3px #ad681955;transform:none}
-.code-panel{position:relative;z-index:1;padding-top:26px}
-@media(max-width:700px){.title{font-size:clamp(27px,7.7vw,45px);letter-spacing:-1.1px;-webkit-text-stroke:1.65px #d65a00;text-shadow:1px 2px 0 #ff9c18,2px 4px 0 #e87b00,3px 6px 0 #a94b06,3px 8px 6px #71390b88;margin-bottom:-3px;transform:scaleX(1.02)}.gift{font-size:36px;margin-bottom:7px}.code-panel{padding-top:19px}}
-@media(max-width:360px){.title{font-size:clamp(25px,7.5vw,29px);letter-spacing:-.7px}}
-
-/* V10: sử dụng tiêu đề cắt trực tiếp từ ảnh mẫu, không còn chữ CSS và emoji chồng lên */
-.title{position:relative;z-index:4;display:flex;align-items:flex-end;justify-content:center;width:100%;margin:0 0 -5px!important;transform:none!important;line-height:1!important;text-shadow:none!important;-webkit-text-stroke:0!important;white-space:normal!important;}
-.title img{display:block;width:min(700px,calc(100vw - 20px));max-width:none;height:auto;flex:none;object-fit:contain;filter:none;transform:none;}
-@media(max-width:700px){.title{margin-bottom:-2px!important}.title img{width:min(100vw - 10px,700px)}}
-
-/* V11: restore gift above reference title and match taller gold panel.
-   Visual-only overrides; do not alter form, Turnstile or API logic. */
-.stage{background-image:url('e39-background-clean.webp');background-position:center center;background-repeat:no-repeat;background-size:cover}
-.center{width:min(610px,100%)}
-.title-group{position:relative;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;margin-bottom:-12px}
-.gift-restored{font-size:67px;line-height:1;position:relative;z-index:5;margin-bottom:-23px;filter:drop-shadow(0 3px 2px #a75a1b66)}
-.title{width:100%;margin:0!important;z-index:6}
-.title img{width:min(730px,calc(100vw - 16px));max-width:none}
-.code-panel{padding:42px 18px 18px;border-radius:29px;background:linear-gradient(160deg,#ffdc59 0%,#ffbd25 55%,#ffa711 100%);border:3px solid #ed920b;box-shadow:0 8px 0 #c97616,0 16px 25px #87470033}
-.code-form{padding:25px 22px 22px;border-radius:22px;gap:13px}
-@media(max-width:700px){
- .stage{background-position:center top;background-size:auto 100%;padding-top:clamp(26px,5vh,65px)}
- .center{width:min(520px,100%)}
- .gift-restored{font-size:49px;margin-bottom:-17px}
- .title-group{margin-bottom:-7px}
- .title img{width:min(100vw - 12px,730px)}
- .code-panel{padding:31px 10px 13px;border-radius:23px}
- .code-form{padding:20px 13px 19px;gap:12px}
-}
-@media(max-width:360px){.gift-restored{font-size:43px;margin-bottom:-14px}.code-panel{padding-top:27px}.code-form{padding:16px 10px}}
-
-/* V12: one approved artwork only. No duplicated title, gift, or gold frame. */
-.stage{background-image:url('e39-v12-approved-background.webp')!important;background-size:100% 100%!important;background-position:center top!important;min-height:0!important;aspect-ratio:1787 / 789;display:block!important;padding:0!important;max-width:1787px;margin:0 auto}
-.center{position:absolute!important;top:32%;left:50%;transform:translateX(-50%);width:36.5%!important;max-width:none!important;z-index:1}
+/* V13: The approved artwork already includes the title, gift and gold frame.
+   Position only functional HTML inside the artwork's blank inner panel. */
+.stage{background-image:url('e39-v12-approved-background.webp');background-position:center top;background-repeat:no-repeat;background-size:100% 100%;width:100%;max-width:1787px;min-height:0;aspect-ratio:1787/789;display:block;padding:0;margin:0 auto;position:relative}
+.center{position:absolute;left:50%;top:39.5%;transform:translateX(-50%);width:33.5%;max-width:none;z-index:1}
 .title-group,.title,.gift-restored{display:none!important}
-.code-panel{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important}
-.code-form{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important;gap:8px!important}
-.group label{font-size:clamp(11px,.95vw,16px);margin-bottom:4px}
-.line{height:clamp(32px,3vw,49px);background:#fffdf9e8}
-.verification{min-height:68px}
-.submit{min-height:49px}
+.code-panel,.code-form{background:transparent;border:0;border-radius:0;box-shadow:none;padding:0}
+.code-form{gap:clamp(5px,.65vw,12px);display:flex;flex-direction:column}
+.group label{font-size:clamp(11px,.92vw,16px);margin-bottom:5px;color:#e8750c}
+.line{height:clamp(32px,2.85vw,47px);border:2px solid #ff9226;background:#fffdf9;border-radius:10px}
+.line input{font-size:clamp(12px,1vw,16px)}
+.verification{min-height:clamp(55px,4.4vw,74px);overflow:visible}
+.verify-widget{max-width:100%}
+.submit{min-height:clamp(38px,3.3vw,54px);width:min(310px,75%);font-size:clamp(15px,1.55vw,23px)}
 @media(max-width:700px){
-.site-header{min-height:80px}
-.stage{height:850px!important;aspect-ratio:auto!important;background-size:auto 850px!important;background-position:center top!important;min-height:850px!important}
-.center{top:30%;width:min(82vw,440px)!important}
-.code-form{gap:10px!important}
-.group label{font-size:14px}
-.line{height:46px}
-.submit{font-size:20px}
+ .site-header{min-height:85px;height:auto;flex-direction:column;gap:8px;padding:8px 5px 10px}
+ .logo{font-size:38px}.nav{gap:4px;width:100%;justify-content:space-around}
+ .nav a{font-size:clamp(10px,2.7vw,13px);gap:4px}.nav .ico{font-size:16px;padding:2px}
+ .stage{height:790px;min-height:790px;aspect-ratio:auto;background-size:auto 790px;background-position:center top}
+ .center{top:30%;width:min(86vw,410px);padding:17px 13px 14px;background:#fff9efed;border:2px solid #ffcf73;border-radius:18px;box-shadow:0 4px 18px #a9621740}
+ .code-form{gap:10px}.group label{font-size:14px;margin-bottom:5px}
+ .line{height:46px}.line input{font-size:16px}.verification{min-height:72px}
+ .submit{min-height:48px;font-size:19px;width:min(310px,95%)}
 }
-@media(max-width:380px){.center{width:85vw!important}.verification{transform:scale(.92);transform-origin:center}}
+@media(max-width:380px){.center{width:90vw;padding:14px 10px}.verification{transform:scale(.94);transform-origin:center}}
 </style></head><body><header class="site-header"><div class="logo">E39</div><nav class="nav" aria-label="Điều hướng"><a href="#" data-link="home"><span class="ico">🏠</span>Trang Chủ</a><a href="#" data-link="contact"><span class="ico">📣</span>Liên Hệ</a><a href="#" data-link="telegram"><span class="ico">✈️</span>Telegram</a><a href="#" data-link="fanpage"><span class="ico">🟠</span>Fanpage</a></nav></header><main class="stage"><div class="center"><div class="code-panel"><form class="code-form" id="desktopForm"><div class="group"><label for="account">Nhập tên tài khoản</label><div class="line"><span>♟</span><input id="account" name="account" placeholder="Nhập tài khoản" required autocomplete="username"></div></div><div class="group"><label for="code">Điền mã code nhận thưởng</label><div class="line"><span>▣</span><input id="code" name="code" placeholder="Mã code" maxlength="6" minlength="6" pattern="[A-Za-z]{6}" required></div></div><div class="verification"><div class="verify-widget"></div><div class="verify-setup">Xác minh Cloudflare chưa được cấu hình</div></div><button class="submit" type="submit">KIỂM TRA NGAY</button></form></div></div></main><div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="dialog" id="dialog"><div class="status-icon" id="icon">❌</div><h2 id="resultTitle">NHẬP MÃ KHUYẾN MÃI</h2><p class="message" id="message">MÃ CODE KHÔNG HỢP LỆ</p><div class="reward" id="reward" hidden></div><div><button type="button" id="close">XÁC NHẬN</button></div><div class="note" id="note"></div></div></div><script src="config.js"></script><script>
 // Supply a secure server-side verification endpoint. Never embed valid codes or API secrets in public HTML.
 const API_URL='/api/verify';
