@@ -31,6 +31,25 @@
  .submit{min-height:48px;font-size:19px;width:min(310px,95%)}
 }
 @media(max-width:380px){.center{width:90vw;padding:14px 10px}.verification{transform:scale(.94);transform-origin:center}}
+
+/* V15: desktop artwork and form use the same responsive coordinate system. */
+@media (min-width:701px){
+ .stage{width:100%;max-width:none;height:auto;min-height:0;aspect-ratio:1787 / 789;background-size:100% 100%;background-position:center top;container-type:inline-size}
+ .center{left:50%;top:33.8%;width:33.5%;transform:translateX(-50%)}
+ .code-form{gap:clamp(5px,.55cqw,10px)}
+ .group label{font-size:clamp(10px,.91cqw,16px);margin-bottom:clamp(2px,.28cqw,5px)}
+ .line{height:2.65cqw;min-height:0;max-height:none;border-width:clamp(1px,.12cqw,2px);border-radius:.55cqw;padding:0 .75cqw}
+ .line input{font-size:clamp(11px,.9cqw,16px)}
+ .verification{min-height:3.6cqw}
+ .submit{min-height:3.1cqw;width:52%;font-size:clamp(13px,1.4cqw,24px);border-width:clamp(1px,.17cqw,3px)}
+}
+/* On phones the background is decorative; the real form remains usable. */
+@media (max-width:700px){
+ .stage{width:100%;max-width:none;min-height:calc(100svh - 85px);height:auto;aspect-ratio:auto;background-size:auto 100%;background-position:center top;padding:clamp(180px,32vh,260px) 12px 50px;display:flex;justify-content:center;align-items:flex-start}
+ .center{position:relative;left:auto;top:auto;transform:none;width:min(92vw,410px);margin:0 auto}
+ .line{min-height:46px;border-radius:10px}
+ .submit{min-height:48px;width:min(310px,95%)}
+}
 </style></head><body><header class="site-header"><div class="logo">E39</div><nav class="nav" aria-label="Điều hướng"><a href="#" data-link="home"><span class="ico">🏠</span>Trang Chủ</a><a href="#" data-link="contact"><span class="ico">📣</span>Liên Hệ</a><a href="#" data-link="telegram"><span class="ico">✈️</span>Telegram</a><a href="#" data-link="fanpage"><span class="ico">🟠</span>Fanpage</a></nav></header><main class="stage"><div class="center"><div class="code-panel"><form class="code-form" id="desktopForm"><div class="group"><label for="account">Nhập tên tài khoản</label><div class="line"><span>♟</span><input id="account" name="account" placeholder="Nhập tài khoản" required autocomplete="username"></div></div><div class="group"><label for="code">Điền mã code nhận thưởng</label><div class="line"><span>▣</span><input id="code" name="code" placeholder="Mã code" maxlength="6" minlength="6" pattern="[A-Za-z]{6}" required></div></div><div class="verification"><div class="verify-widget"></div><div class="verify-setup">Xác minh Cloudflare chưa được cấu hình</div></div><button class="submit" type="submit">KIỂM TRA NGAY</button></form></div></div></main><div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="dialog" id="dialog"><div class="status-icon" id="icon">❌</div><h2 id="resultTitle">NHẬP MÃ KHUYẾN MÃI</h2><p class="message" id="message">MÃ CODE KHÔNG HỢP LỆ</p><div class="reward" id="reward" hidden></div><div><button type="button" id="close">XÁC NHẬN</button></div><div class="note" id="note"></div></div></div><script src="config.js"></script><script>
 // Supply a secure server-side verification endpoint. Never embed valid codes or API secrets in public HTML.
 const API_URL='/api/verify';
