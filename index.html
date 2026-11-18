@@ -1,118 +1,49 @@
 <!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>E39 - Page nhập code</title><style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fff7e9}.stage{position:relative;width:100%;aspect-ratio:1903/911;background:url('background.jpg') center/100% 100% no-repeat;overflow:hidden}.nav-hit{position:absolute;top:1.5%;height:6%;border:0;background:transparent;cursor:pointer}.nav-hit:nth-child(1){left:41%;width:8%}.nav-hit:nth-child(2){left:49.5%;width:8%}.nav-hit:nth-child(3){left:58%;width:9%}.nav-hit:nth-child(4){left:66.5%;width:9%}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fff7e9}.stage{position:relative;width:100%;aspect-ratio:1903/911;background:url('remini-background.webp') center/100% 100% no-repeat;overflow:hidden}.nav-hit{position:absolute;top:1.5%;height:6%;border:0;background:transparent;cursor:pointer}.nav-hit:nth-child(1){left:41%;width:8%}.nav-hit:nth-child(2){left:49.5%;width:8%}.nav-hit:nth-child(3){left:58%;width:9%}.nav-hit:nth-child(4){left:66.5%;width:9%}
 /* The background image has its old form removed. Only this single live form is rendered. */
 .form{position:absolute;left:34.9%;top:40.25%;width:30.2%;height:33.9%;padding:1.05% 1.45% 1.0%;display:flex;flex-direction:column;justify-content:space-between;gap:0;background:transparent}.group{min-height:0}.form label{display:block;color:#ff6900;font-weight:700;font-size:clamp(11px,.83vw,16px);margin-bottom:1.1%}.line{height:clamp(28px,4.8vh,45px);border:2px solid #ff8c24;border-radius:12px;background:white;display:flex;align-items:center;padding:0 12px;gap:10px}.line:focus-within{outline:2px solid #ffc56c}.line span{font-size:15px;color:#505050}.line input{font:inherit;font-size:clamp(12px,.85vw,17px);border:0;outline:0;width:100%;min-width:0;background:transparent;color:#333}.line input::placeholder{color:#929292}.verification{align-self:center;display:flex;justify-content:center;align-items:center;background:#f6f6f6;border:1px solid #dedede;color:#777;font-size:clamp(9px,.62vw,12px);width:42%;height:14%;min-height:25px}.submit{align-self:center;width:55%;height:21%;min-height:36px;border:3px solid #ffe1a4;border-radius:50px;background:linear-gradient(#ffc36d 0%,#ff9d2c 45%,#ff7609 100%);box-shadow:inset 0 0 0 2px #fff5dd,0 3px 7px #c56d24a8;color:#fff;font-weight:900;font-size:clamp(13px,1.42vw,28px);text-shadow:0 2px 2px #d66b13;white-space:nowrap;cursor:pointer}.submit:hover{filter:brightness(1.05)}.submit:disabled{opacity:.65;cursor:wait}
 .modal[hidden]{display:none}.modal{position:fixed;inset:0;background:#000b;z-index:10;display:grid;place-items:center;padding:20px}.dialog{position:relative;background:linear-gradient(#fff,#fffaf4);border:7px ridge #ff8b18;border-radius:35px;box-shadow:0 0 0 3px #fff0bb,0 15px 45px #0005;text-align:center;width:min(460px,94vw);padding:70px 20px 32px}.dialog:before{content:'🎁';position:absolute;top:-56px;left:50%;transform:translateX(-50%);font-size:85px}.status-icon{font-size:42px}.dialog h2{font-family:Arial,Helvetica,sans-serif;font-size:clamp(16px,2.2vw,19px);font-weight:800;line-height:1.35;letter-spacing:0;color:#46566b;margin:8px 0}.message{font-family:Arial,Helvetica,sans-serif;font-size:clamp(17px,2.3vw,20px);line-height:1.4;letter-spacing:0;color:#ec3434;font-weight:800;margin:0 0 15px;overflow-wrap:break-word}.dialog.success h2,.dialog.success .message{color:#0aab71}.reward{display:inline-block;background:#fffdf1;border-radius:40px;padding:6px 35px;color:#ff9000;font-size:30px;font-weight:900;margin:0 0 14px}.reward[hidden]{display:none}.dialog button{font-family:Arial,Helvetica,sans-serif;line-height:1.2;border:2px solid #ffad39;border-radius:12px;background:linear-gradient(#ffbd4b,#ff7d13);color:#fff;font-size:17px;font-weight:900;padding:12px 35px;cursor:pointer}.note{display:none!important}
 .verification{width: min(100%,300px);height:58px;min-height:58px;background:#fafafa;border:1px solid #d9d9d9;border-radius:3px;padding:4px;position:relative}.verify-widget{width:100%;display:flex;align-items:center;justify-content:center}.verify-setup{font-size:11px;text-align:center;line-height:1.4;color:#666;padding:5px}.verification.is-ready{background:#fff}.mobile{display:none}
-@media(max-width:700px){.stage{min-height:100svh;aspect-ratio:auto;background-size:auto 100%;background-position:center}.desktop{display:none}.mobile{position:absolute;inset:0;display:flex;flex-direction:column;padding:18px 14px;background:#fff8f0a8}.mobile-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.mobile-head strong{font-size:39px;color:#ff8317}.mobile-head nav{display:flex;flex-wrap:wrap;gap:9px}.mobile-head a{font-size:11px;font-weight:bold;color:#714d29;text-decoration:none}.mobile-card{margin:auto 0;border:5px solid #ffb82c;border-radius:26px;background:#fffaf2;padding:23px 18px;box-shadow:0 12px 35px #c27b1a66}.mobile-card h1{text-align:center;font-size:27px;color:#ff790b;margin:0 0 20px}.mobile-card label{display:block;font-weight:bold;color:#ff7000;margin:13px 0 7px;font-size:14px}.mobile-card input{width:100%;height:47px;border:2px solid #ff9224;border-radius:12px;padding:0 12px;font-size:16px}.mobile-card .verification{width:min(100%,300px);margin:18px auto;height:58px}.mobile-card .submit{width:100%;height:55px;font-size:22px}}
 
-/* E39 FIX: a single form, with a reserved 65px Turnstile row (normal widget). */
+/* Clean layout: no legacy mobile background layers or repeated banners. */
+.mobile{display:none}
 @media(min-width:701px){
- .form{top:39.25%;height:35.1%;display:grid;grid-template-rows:minmax(0,1fr) minmax(0,1fr) 65px minmax(40px,.85fr);row-gap:4px;justify-content:initial;padding:1.05% 1.45%;}
- .form .group{display:flex;flex-direction:column;min-height:0;justify-content:center;}
- .form label{margin-bottom:4px;line-height:1.15;flex:none;}
- .form .line{height:clamp(30px,2.35vw,43px);flex:none;}
- .form .verification{width:300px;max-width:100%;height:65px;min-height:65px;align-self:center;justify-self:center;padding:0;overflow:hidden;}
- .form .submit{height:clamp(37px,3.1vw,55px);min-height:0;width:55%;align-self:center;justify-self:center;}
+ .form{top:31%;height:47%;left:35%;width:30%;padding:1.3% 1.6%;display:flex;flex-direction:column;gap:8px;justify-content:center;
+   background:rgba(255,250,239,.91);border:4px solid #f8b438;border-radius:20px;box-shadow:0 8px 28px #9860244d}
+ .form .group{width:100%}
+ .form .line{height:43px}
+ .form .verification{width:300px;height:65px;min-height:65px;flex:none;overflow:hidden}
+ .form .submit{height:51px;min-height:51px;width:80%;flex:none}
 }
-.verification{width:300px;max-width:100%;height:65px;min-height:65px;padding:0;overflow:hidden;}
-.verify-widget{width:100%;height:100%;display:flex;justify-content:center;align-items:center;}
-.verify-widget iframe{display:block;max-width:100%;}
-.verify-setup[hidden]{display:none!important;}
+.verify-widget{width:100%;height:100%;display:flex;justify-content:center;align-items:center}
+.verify-widget iframe{max-width:100%}
+.verify-setup[hidden]{display:none!important}
 @media(max-width:700px){
- .mobile-card .verification{width:min(100%,300px);height:65px;min-height:65px;margin:16px auto;}
- .mobile-card .submit{display:block;min-height:52px;}
-}
-
-/* Modal typography fix: Vietnamese-friendly system font and consistent weights. */
-.dialog, .dialog * {font-family:"Segoe UI",Arial,Helvetica,sans-serif!important;font-style:normal!important;font-variant:normal!important;text-transform:none;text-shadow:none!important;letter-spacing:0!important;}
-.dialog {font-synthesis:none;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
-.dialog h2 {font-size:20px!important;font-weight:700!important;line-height:1.45!important;margin:8px 0 5px!important;white-space:normal;}
-.dialog .message {font-size:20px!important;font-weight:700!important;line-height:1.45!important;margin:0 0 16px!important;white-space:normal;}
-.dialog button {font-size:17px!important;font-weight:700!important;line-height:1.35!important;}
-.dialog .reward {font-weight:700!important;}
-@media(max-width:480px){.dialog h2,.dialog .message{font-size:18px!important}.dialog{padding-left:16px;padding-right:16px}}
-
-/* E39 mobile: preserve the illustrated original composition instead of the dark pop-up. */
-@media(max-width:700px){
- html,body{width:100%;overflow-x:hidden;background:#202020}
- .stage{position:relative;width:100%;min-height:max(850px,100svh);height:auto;aspect-ratio:auto;background:none;overflow:hidden}
+ html,body{width:100%;margin:0;overflow-x:hidden;background:#fff8ed}
+ .stage{width:100%;aspect-ratio:auto;min-height:100svh;background:none;overflow:visible}
  .desktop{display:none!important}
- .mobile{display:block;position:relative;inset:auto;min-height:max(850px,100svh);padding:0;background:#202020;isolation:isolate}
- .mobile-head{position:relative;z-index:3;display:block;width:100%;height:178px;background:#202020;color:#ddd}
- .mobile-logo{height:107px;display:flex;justify-content:center;align-items:center;color:#c76a16;font-size:76px;font-weight:900;letter-spacing:-4px;border-bottom:1px solid #555;line-height:1}
- .mobile-head nav{height:71px;display:flex;justify-content:space-around;align-items:center;flex-wrap:nowrap;gap:2px;padding:0 7px;border-bottom:1px solid #444}
- .mobile-head nav a{display:flex;align-items:center;gap:4px;white-space:nowrap;color:#c8c8d0;font-size:clamp(10px,2.7vw,15px);font-weight:700;text-decoration:none}
- .mobile-head nav a span{font-size:clamp(13px,4vw,20px)}
- .mobile-scenery{position:absolute;z-index:0;left:0;right:0;top:178px;bottom:0;background-image:url('background.jpg');background-size:auto 100%;background-position:center bottom;background-repeat:no-repeat}
- .mobile-banner{position:absolute;z-index:1;top:190px;left:0;width:100%;aspect-ratio:720/600;background:url('mobile-banner.jpg') center top/100% 100% no-repeat;pointer-events:none}
- .mobile-card{position:absolute;z-index:2;top:calc(190px + 28.5vw);left:50%;transform:translateX(-50%);width:79%;max-width:400px;margin:0;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;display:flex;flex-direction:column;gap:0}
- .mobile-card label{font-size:clamp(11px,3.1vw,15px);line-height:1.2;margin:0 0 5px;color:#e7791b;font-weight:700}
- .mobile-input{display:flex;align-items:center;gap:8px;width:100%;height:clamp(31px,8.2vw,39px);padding:0 9px;border:2px solid #bf6217;border-radius:8px;background:#292929;margin-bottom:8px}
- .mobile-input span{color:#ccc;font-size:14px}
- .mobile-card .mobile-input input{display:block;flex:1;width:100%;min-width:0;height:100%;padding:0;border:0;border-radius:0;background:transparent;color:#fff;font-size:clamp(12px,3.3vw,16px);outline:0}
- .mobile-input input::placeholder{color:#b6b6b6}
- .mobile-input:focus-within{outline:2px solid #ffb75a;outline-offset:1px}
- .mobile-turnstile{height:53px;width:100%;display:flex;justify-content:center;align-items:flex-start;overflow:visible;margin:0 0 4px}
- .mobile-card .verification{width:300px;max-width:none;height:65px;min-height:65px;margin:0;flex:none;transform:scale(.73);transform-origin:top center;background:#fafafa}
- .mobile-card .submit{display:block;align-self:center;width:59%;height:clamp(34px,9vw,43px);min-height:0;margin:0;border-radius:60px;border:3px solid #ffd58e;background:linear-gradient(#ffcb78,#ff8b1b);box-shadow:inset 0 0 0 2px #fff0c9,0 2px 6px #8b4c1d;color:white;font-size:clamp(12px,3.7vw,18px);font-weight:900;text-shadow:0 1px 2px #b15b13;white-space:nowrap}
-}
-@media(max-width:350px){.mobile-head{height:155px}.mobile-logo{height:92px;font-size:65px}.mobile-head nav{height:63px}.mobile-scenery{top:155px}.mobile-banner{top:166px}.mobile-card{top:calc(166px + 28.5vw)}.mobile-card .verification{transform:scale(.65)}.mobile-turnstile{height:47px}.mobile-input{margin-bottom:5px}}
-
-/* E39 MOBILE FINAL: matching the reference layout and restoring illustrated characters. */
-@media(max-width:700px){
- html,body{background:#fff7ed!important}
- .stage{min-height:100svh!important;background:#fff7ed!important;overflow:hidden}
- .mobile{min-height:max(900px,100svh)!important;background:#fff7ed!important}
- .mobile-head{height:172px!important;background:#202020!important}
- .mobile-logo{height:105px!important;font-size:74px!important}
- .mobile-head nav{height:67px!important;padding:0 10px!important;gap:2px!important}
- .mobile-head nav a{font-size:clamp(10px,2.6vw,14px)!important;gap:3px!important}
- .mobile-head nav a span{font-size:clamp(13px,3.5vw,19px)!important}
- .mobile-scenery{top:172px!important;bottom:0!important;background-image:url('mobile-scenery.jpg')!important;background-size:100% 100%!important;background-position:center!important}
- .mobile-banner{top:182px!important;width:100%!important;aspect-ratio:720/600!important;background-size:100% 100%!important}
- .mobile-card{top:calc(182px + 29vw)!important;width:77%!important;max-width:420px!important;gap:0!important}
- .mobile-card label{font-size:clamp(12px,3vw,16px)!important;margin:0 0 5px!important}
- .mobile-input{height:clamp(36px,7.8vw,43px)!important;margin-bottom:9px!important;background:#292929!important}
- .mobile-card .mobile-input input{font-size:clamp(13px,3.1vw,17px)!important}
- .mobile-turnstile{height:55px!important;margin-bottom:4px!important}
- .mobile-card .verification{transform:scale(.78)!important}
- .mobile-card .submit{width:62%!important;height:clamp(38px,8.5vw,46px)!important;font-size:clamp(13px,3.4vw,19px)!important}
-}
-@media(max-width:360px){
- .mobile-head{height:155px!important}.mobile-logo{height:94px!important;font-size:65px!important}.mobile-head nav{height:61px!important}
- .mobile-scenery{top:155px!important}.mobile-banner{top:165px!important}.mobile-card{top:calc(165px + 29vw)!important;width:78%!important}
- .mobile-card .verification{transform:scale(.69)!important}.mobile-turnstile{height:49px!important}
-}
-
-/* Mobile uses one uninterrupted illustration: banner and characters are in the same image. */
-@media(max-width:700px){
- html,body{background:#fff7ed!important}
- .stage{height:auto!important;min-height:0!important;overflow:hidden!important}
- .mobile{position:relative!important;min-height:calc(172px + 183.333333vw)!important;height:auto!important;background:#fff7ed!important;overflow:hidden!important}
- .mobile-scenery{position:absolute!important;left:0!important;right:0!important;top:172px!important;bottom:auto!important;width:100%!important;height:183.333333vw!important;background-image:url('mobile-scenery.jpg')!important;background-repeat:no-repeat!important;background-position:center top!important;background-size:100% 100%!important}
+ .mobile{display:flex;flex-direction:column;position:relative;width:100%;min-height:100svh;background:#fff8ed}
+ .mobile-head{display:block;background:#202020;color:#eee}
+ .mobile-logo{display:flex;justify-content:center;align-items:center;height:76px;font-size:56px;font-weight:900;color:#f28b22;letter-spacing:-2px}
+ .mobile-head nav{display:flex;justify-content:space-around;gap:4px;padding:12px 6px;border-top:1px solid #555}
+ .mobile-head nav a{display:flex;align-items:center;gap:4px;text-decoration:none;color:#eee;font-weight:700;font-size:clamp(10px,2.7vw,14px);white-space:nowrap}
+ .mobile-head nav a span{font-size:17px}
+ .mobile-scenery{order:3;display:block;position:relative;width:100%;height:auto;aspect-ratio:1024/445;background:url('remini-background.webp') center/100% 100% no-repeat}
  .mobile-banner{display:none!important}
- .mobile-card{z-index:2!important}
+ .mobile-card{order:2;position:relative;display:flex;flex-direction:column;gap:7px;margin:18px 14px 8px;padding:20px 17px 18px;
+   background:linear-gradient(#ffe8aa,#ffbf38);border:4px solid #d8911e;border-radius:22px;box-shadow:0 5px 15px #b8752655}
+ .mobile-card::before{content:'Page nhập code 🎁';display:block;text-align:center;font-weight:900;font-size:clamp(23px,6vw,32px);
+   color:#e97416;text-shadow:1px 2px #fff8d0;margin-bottom:8px}
+ .mobile-card label{display:block;font-size:clamp(14px,3.7vw,18px);font-weight:700;color:#a64b0b;margin:0}
+ .mobile-input{display:flex;align-items:center;gap:8px;width:100%;height:48px;padding:0 12px;background:#292929;border:2px solid #bb6117;border-radius:11px;margin-bottom:6px}
+ .mobile-input span{color:#ddd}
+ .mobile-card .mobile-input input{flex:1;min-width:0;width:100%;height:100%;border:0;outline:0;background:transparent;color:#fff;font-size:16px}
+ .mobile-card .mobile-input input::placeholder{color:#aaa}
+ .mobile-turnstile{display:flex;justify-content:center;align-items:center;min-height:68px;width:100%;overflow:hidden}
+ .mobile-card .verification{width:300px;max-width:100%;height:65px;min-height:65px;overflow:hidden;background:#f9f9f9}
+ .mobile-card .submit{width:min(100%,290px);align-self:center;height:54px;min-height:54px;margin-top:3px;font-size:20px}
 }
-@media(max-width:360px){.mobile{min-height:calc(155px + 183.333333vw)!important}.mobile-scenery{top:155px!important}}
-
-/* V4: One composed portrait illustration, sized by natural image ratio.
-   Banner and form share the same coordinate system; no tiled background. */
-@media (max-width:700px) {
- html,body {background:#fff7ed!important;overflow-x:hidden!important}
- .stage {min-height:0!important;height:auto!important;aspect-ratio:auto!important;background:none!important}
- .mobile {position:relative!important;display:block!important;height:calc(172px + 211.111vw)!important;min-height:0!important;background:#fff7ed!important;overflow:hidden!important}
- .mobile-head {height:172px!important}
- .mobile-scenery {position:absolute!important;top:172px!important;left:0!important;width:100%!important;height:211.111vw!important;bottom:auto!important;background:url('mobile-composed.jpg') center top / 100% 100% no-repeat!important}
- .mobile-banner {display:none!important}
- .mobile-card {position:absolute!important;top:calc(172px + 32vw)!important;left:50%!important;transform:translateX(-50%)!important;width:76%!important;max-width:420px!important;z-index:2!important}
- .mobile-card .submit {background:linear-gradient(#ffd08b,#ef8a19)!important;color:white!important}
-}
-@media(max-width:360px) {
- .mobile {height:calc(155px + 211.111vw)!important}
- .mobile-scenery {top:155px!important}
- .mobile-card {top:calc(155px + 32vw)!important}
-}
+@media(max-width:360px){.mobile-card{margin:12px 8px;padding:16px 10px}.mobile-card .verification{transform:scale(.91)}}
 </style></head><body><main class="stage"><div class="desktop"><button class="nav-hit" data-link="home" aria-label="Trang Chủ"></button><button class="nav-hit" data-link="contact" aria-label="Liên Hệ"></button><button class="nav-hit" data-link="telegram" aria-label="Telegram"></button><button class="nav-hit" data-link="fanpage" aria-label="Fanpage"></button><form class="form" id="desktopForm"><div class="group"><label for="account">Nhập tên tài khoản</label><div class="line"><span aria-hidden="true">♟</span><input id="account" name="account" placeholder="Nhập tài khoản" required autocomplete="username"></div></div><div class="group"><label for="code">Điền mã code nhận thưởng</label><div class="line"><span aria-hidden="true">▣</span><input id="code" name="code" placeholder="Ví dụ: SLFKSN" maxlength="6" minlength="6" pattern="[A-Za-z]{6}" required></div></div><div class="verification"><div class="verify-widget"></div><div class="verify-setup">Xác minh Cloudflare chưa được cấu hình</div></div><button class="submit" type="submit">KIỂM TRA NGAY</button></form></div><div class="mobile"><header class="mobile-head"><div class="mobile-logo">E39</div><nav><a href="#" data-link="home"><span>🅴</span>Trang Chủ</a><a href="#" data-link="contact"><span>📣</span>Liên Hệ</a><a href="#" data-link="telegram"><span>✈️</span>Telegram</a><a href="#" data-link="fanpage"><span>🟠</span>Fanpage</a></nav></header><div class="mobile-scenery" aria-hidden="true"></div><div class="mobile-banner" aria-hidden="true"></div><form class="mobile-card" id="mobileForm"><label for="mAccount">Nhập tên tài khoản</label><div class="mobile-input"><span aria-hidden="true">♟</span><input id="mAccount" name="account" placeholder="Nhập tài khoản" required autocomplete="username"></div><label for="mCode">Điền mã code nhận thưởng</label><div class="mobile-input"><span aria-hidden="true">▣</span><input id="mCode" name="code" placeholder="Mã code" maxlength="6" minlength="6" pattern="[A-Za-z]{6}" required></div><div class="mobile-turnstile"><div class="verification"><div class="verify-widget"></div><div class="verify-setup">Xác minh Cloudflare chưa được cấu hình</div></div></div><button class="submit" type="submit">KIỂM TRA NGAY</button></form></div></main><div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="dialog" id="dialog"><div class="status-icon" id="icon">❌</div><h2 id="resultTitle">NHẬP MÃ KHUYẾN MÃI</h2><p class="message" id="message">MÃ CODE KHÔNG HỢP LỆ</p><div class="reward" id="reward" hidden></div><div><button type="button" id="close">XÁC NHẬN</button></div><div class="note" id="note"></div></div></div><script src="config.js"></script><script>
 // Supply a secure server-side verification endpoint. Never embed valid codes or API secrets in public HTML.
 const API_URL='/api/verify';
