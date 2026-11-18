@@ -17,30 +17,45 @@
 .dialog{position:relative;background:linear-gradient(#fff,#fffaf4);border:7px ridge #ff8b18;border-radius:35px;box-shadow:0 0 0 3px #fff0bb,0 15px 45px #0005;text-align:center;width:min(460px,94vw);padding:70px 20px 32px}
 .dialog:before{content:'🎁';position:absolute;top:-56px;left:50%;transform:translateX(-50%);font-size:85px}.status-icon{font-size:42px}.dialog h2{font-size:19px;color:#46566b;margin:8px 0}.message{font-size:20px;line-height:1.4;color:#ec3434;font-weight:800;margin:0 0 15px;overflow-wrap:break-word}.dialog.success h2,.dialog.success .message{color:#0aab71}.reward{display:inline-block;background:#fffdf1;border-radius:40px;padding:6px 35px;color:#ff9000;font-size:30px;font-weight:900;margin:0 0 14px}.reward[hidden]{display:none}.dialog button{border:2px solid #ffad39;border-radius:12px;background:linear-gradient(#ffbd4b,#ff7d13);color:#fff;font-size:17px;font-weight:900;padding:12px 35px;cursor:pointer}.note{display:none!important}
 @media(max-width:900px){
+ html,body{background:#fff8ed}
  .stage{display:none}
- .mobile-layout{display:block;min-height:100svh;background:#fff8ec}
- .mobile-header{background:#202020;color:white;text-align:center}
- .mobile-logo{font-size:52px;font-weight:1000;letter-spacing:-3px;color:#fa8519;padding:8px}
- .mobile-nav{display:flex;justify-content:space-around;align-items:center;gap:4px;border-top:1px solid #4a4a4a;padding:12px 3px}
- .mobile-nav a{font-size:clamp(10px,2.6vw,14px);color:#eee;text-decoration:none;white-space:nowrap;font-weight:600}
- .mobile-nav .ico{display:inline-block;margin-right:4px}
- .mobile-main{background:linear-gradient(180deg,#fff4dc,#ffe2a5);padding:20px 12px 0}
- .mobile-title{color:#fff;text-align:center;font-size:clamp(28px,7vw,44px);font-style:italic;font-weight:1000;line-height:1.15;white-space:nowrap;-webkit-text-stroke:1.3px #d96b05;text-shadow:0 3px #ffb62c,0 5px #ae500c;margin:4px auto 14px}
- .mobile-form{max-width:520px;margin:auto;padding:19px 16px 20px;background:linear-gradient(#fff9ef,#fff6e7);border:9px solid #ffbb2c;outline:2px solid #e88e13;border-radius:24px;box-shadow:0 6px 14px #ad751c50;display:flex;flex-direction:column;gap:8px}
- .mobile-form label{display:block;color:#ff7300;font-weight:700;font-size:15px;margin-bottom:4px}
- .mobile-form .line{display:flex;align-items:center;gap:8px;background:#fff;border:2px solid #f89928;border-radius:10px;height:48px;padding:0 12px}
- .mobile-form .line input{width:100%;min-width:0;border:0;outline:0;font-size:16px;background:transparent;color:#333}
- .mobile-form .verification{display:flex;align-items:center;justify-content:center;min-height:70px;max-width:100%;overflow:hidden}
- .mobile-form .submit{align-self:center;border:3px solid #ffdda1;border-radius:35px;background:linear-gradient(#ffc66d,#ff7a09);color:#fff;text-shadow:0 1px #aa4b00;box-shadow:0 3px 5px #a65c18a8;font-size:20px;font-weight:900;min-height:51px;width:min(100%,290px);cursor:pointer}
- .mobile-scenery{margin-top:18px;width:100%;height:min(72vw,390px);background:url('remini-original.webp') center bottom / auto 190% no-repeat}
+ .mobile-layout{display:block;min-height:100svh;background:#fff8ed}
+ .mobile-header{position:relative;z-index:3;background:#fff;box-shadow:0 2px 5px #8a5c2922}
+ .mobile-logo{text-align:center;font-size:clamp(36px,10vw,52px);font-weight:1000;letter-spacing:-2px;color:#fb871b;line-height:1;padding:9px 0 7px}
+ .mobile-nav{display:flex;align-items:center;justify-content:space-around;gap:3px;padding:9px 4px 11px;border-top:1px solid #f0e2d1}
+ .mobile-nav a{display:flex;align-items:center;gap:4px;color:#394354;font-size:clamp(10px,2.7vw,14px);text-decoration:none;font-weight:700;white-space:nowrap}
+ .mobile-nav .ico{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:6px;background:linear-gradient(#ffe9ae,#ffb84c);font-size:15px;box-shadow:0 1px 3px #b8752755}
+ .scene-window{position:relative;width:100%;height:calc(515px * var(--scene-scale,1));overflow:hidden;background:#fff8ed}
+ .scene-art{position:absolute;top:calc(-47px * var(--scene-scale,1));left:50%;margin-left:calc(-512px * var(--scene-scale,1));width:1024px;height:572px;background:url('remini-original.webp') center / 1024px 572px no-repeat;transform:scale(var(--scene-scale,1));transform-origin:top left}
+ .scene-art .mobile-form{position:absolute;left:36.3%;top:45.3%;width:27.5%;height:27.5%;margin:0;padding:0;background:transparent;border:0;display:block}
+ .scene-art .group{position:absolute;left:0;width:100%;height:17.5%}
+ .scene-art .group.first{top:0}.scene-art .group.second{top:32.4%}
+ .scene-art label{display:none}
+ .scene-art .line{height:100%;width:100%;display:flex;align-items:center;padding:0 8px 0 22px}
+ .scene-art .line .input-icon{display:none}
+ .scene-art input{height:100%;width:100%;border:0;outline:0;background:transparent;font-size:13px;color:#202020}
+ .scene-art input::placeholder{color:transparent}
+ .scene-art input:focus{background:#fffffff2;border-radius:5px;outline:2px solid #ff9828}
+ .scene-art .verification{position:absolute;top:58%;left:7%;width:86%;height:27%;display:flex;justify-content:center;align-items:center;overflow:visible;background:#fff9ec}
+ .scene-art .verify-widget{display:flex;justify-content:center;width:100%}
+ .scene-art .verify-setup{font-size:10px;text-align:center;color:#555}
+ .scene-art .submit{position:absolute;top:90%;left:22%;width:56%;height:23%;border:0;border-radius:30px;background:transparent;color:transparent;cursor:pointer}
+ .scene-art .submit:focus-visible{outline:3px solid #1479d4}
+ .scene-art .submit:disabled{cursor:wait}
+ .dialog{padding-top:65px}
 }
+@media(min-width:901px){.mobile-layout{display:none}}
+
 </style></head><body><main class="stage" aria-label="E39 - Page nhập code">
 <button class="hit home" data-link="home" aria-label="Trang Chủ"></button><button class="hit contact" data-link="contact" aria-label="Liên Hệ"></button><button class="hit telegram" data-link="telegram" aria-label="Telegram"></button><button class="hit fanpage" data-link="fanpage" aria-label="Fanpage"></button>
 <form class="desktop-form" id="desktopForm"><div class="group first"><label for="account">Nhập tên tài khoản</label><div class="line"><input id="account" name="account" aria-label="Nhập tài khoản" placeholder="Nhập tài khoản" required autocomplete="username"></div></div><div class="group second"><label for="code">Điền mã code nhận thưởng</label><div class="line"><input id="code" name="code" aria-label="Mã code" placeholder="Mã code" maxlength="6" minlength="6" pattern="[A-Za-z]{6}" required></div></div><div class="verification"><div class="verify-widget"></div><div class="verify-setup">Xác minh Cloudflare chưa được cấu hình</div></div><button class="submit" type="submit" aria-label="KIỂM TRA NGAY">KIỂM TRA NGAY</button></form></main>
-<div class="mobile-layout"><header class="mobile-header"><div class="mobile-logo">E39</div><nav class="mobile-nav"><a href="#" data-link="home"><span class="ico">🏠</span>Trang Chủ</a><a href="#" data-link="contact"><span class="ico">📣</span>Liên Hệ</a><a href="#" data-link="telegram"><span class="ico">✈️</span>Telegram</a><a href="#" data-link="fanpage"><span class="ico">🟠</span>Fanpage</a></nav></header><section class="mobile-main"><h1 class="mobile-title">🎁 Page nhập code</h1><form class="mobile-form" id="mobileForm"><div><label for="mAccount">Nhập tên tài khoản</label><div class="line"><span>♟</span><input id="mAccount" name="account" placeholder="Nhập tài khoản" required autocomplete="username"></div></div><div><label for="mCode">Điền mã code nhận thưởng</label><div class="line"><span>▣</span><input id="mCode" name="code" placeholder="Mã code" maxlength="6" minlength="6" pattern="[A-Za-z]{6}" required></div></div><div class="verification"><div class="verify-widget"></div><div class="verify-setup">Xác minh Cloudflare chưa được cấu hình</div></div><button class="submit" type="submit">KIỂM TRA NGAY</button></form></section><div class="mobile-scenery" aria-hidden="true"></div></div>
+<div class="mobile-layout"><header class="mobile-header"><div class="mobile-logo">E39</div><nav class="mobile-nav"><a href="#" data-link="home"><span class="ico">🅴</span>Trang Chủ</a><a href="#" data-link="contact"><span class="ico">📣</span>Liên Hệ</a><a href="#" data-link="telegram"><span class="ico">✈️</span>Telegram</a><a href="#" data-link="fanpage"><span class="ico">🟠</span>Fanpage</a></nav></header><div class="scene-window"><div class="scene-art"><form class="mobile-form" id="mobileForm"><div class="group first"><label for="mAccount">Nhập tên tài khoản</label><div class="line"><input id="mAccount" name="account" aria-label="Nhập tài khoản" placeholder="Nhập tài khoản" required autocomplete="username"></div></div><div class="group second"><label for="mCode">Điền mã code nhận thưởng</label><div class="line"><input id="mCode" name="code" aria-label="Mã code" placeholder="Mã code" maxlength="6" minlength="6" pattern="[A-Za-z]{6}" required></div></div><div class="verification"><div class="verify-widget"></div><div class="verify-setup">Xác minh Cloudflare chưa được cấu hình</div></div><button class="submit" type="submit" aria-label="KIỂM TRA NGAY">KIỂM TRA NGAY</button></form></div></div></div>
 <div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="dialog" id="dialog"><div class="status-icon" id="icon">❌</div><h2 id="resultTitle">NHẬP MÃ KHUYẾN MÃI</h2><p class="message" id="message">MÃ CODE KHÔNG HỢP LỆ</p><div class="reward" id="reward" hidden></div><div><button type="button" id="close">XÁC NHẬN</button></div><div class="note" id="note"></div></div></div><script src="config.js"></script><script>
 // Supply a secure server-side verification endpoint. Never embed valid codes or API secrets in public HTML.
 const API_URL='/api/verify';
+// Scale the single original Remini scene to fit the mobile form without duplicating backgrounds.
+function fitMobileScene(){document.querySelector('.mobile-layout').style.setProperty('--scene-scale',String(Math.min(1.7,Math.max(.75,window.innerWidth/355))))}
+fitMobileScene();window.addEventListener('resize',fitMobileScene);
 // Dán Site Key công khai từ Cloudflare Turnstile (không dán Secret Key ở đây).
 const TURNSTILE_SITE_KEY=window.E39_CONFIG?.turnstileSiteKey || '';
 const turnstileIds=new Map();
