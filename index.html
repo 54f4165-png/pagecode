@@ -145,6 +145,31 @@
  .code-form{gap:clamp(3px,.7vw,5px)}
  .group label{margin-bottom:4px}
 }
+
+/* V27 - ONE FIXED PALETTE FOR DESKTOP / ANDROID / IOS.
+   Preserve the original artwork, positioning, Firebase and Turnstile scripts. */
+:root{color-scheme:light;--e39-header:#242424;--e39-nav-text:#f3f3f3;
+ --e39-orange:#f58220;--e39-label:#e8750c;--e39-input:#292929;
+ --e39-input-border:#b65c18;--e39-placeholder:#aaa;--e39-button-top:#ffd27a;
+ --e39-button-bottom:#ff8a1c}
+html,body{color-scheme:light}
+.site-header{background:var(--e39-header);box-shadow:none}
+.logo{background:var(--e39-header);color:var(--e39-orange)}
+.nav{background:var(--e39-header)}
+.nav a{color:var(--e39-nav-text)}
+.nav .ico{background:linear-gradient(#fff6df,#ffc45e);box-shadow:0 1px 3px #ae6c20}
+.group label{color:var(--e39-label)}
+.line{background:var(--e39-input);border-color:var(--e39-input-border)}
+.line span{color:var(--e39-placeholder)}
+.line input,.line input:focus{background:transparent!important;color:#fff!important;
+ -webkit-text-fill-color:#fff;appearance:none;-webkit-appearance:none}
+.line input::placeholder{color:var(--e39-placeholder);opacity:1;-webkit-text-fill-color:var(--e39-placeholder)}
+.line input:-webkit-autofill,.line input:-webkit-autofill:hover,.line input:-webkit-autofill:focus{
+ -webkit-text-fill-color:#fff!important;-webkit-box-shadow:0 0 0 1000px var(--e39-input) inset!important;
+ box-shadow:0 0 0 1000px var(--e39-input) inset!important;caret-color:#fff}
+.submit{background:linear-gradient(var(--e39-button-top),var(--e39-button-bottom));
+ color:#fff;border-color:#ffe1a3;box-shadow:0 3px 0 #ce7113,0 4px 10px #a65b1955}
+@media (prefers-color-scheme:dark){html,body{color-scheme:light}}
 </style></head><body><header class="site-header"><div class="logo">E39</div><nav class="nav" aria-label="Điều hướng"><a href="#" data-link="home"><span class="ico">🏠</span>Trang Chủ</a><a href="#" data-link="contact"><span class="ico">📣</span>Liên Hệ</a><a href="#" data-link="telegram"><span class="ico">✈️</span>Telegram</a><a href="#" data-link="fanpage"><span class="ico">🟠</span>Fanpage</a></nav></header><main class="stage"><div class="center"><div class="code-panel"><form class="code-form" id="desktopForm"><div class="group"><label for="account">Nhập tên tài khoản</label><div class="line"><span>♟</span><input id="account" name="account" placeholder="Nhập tài khoản" required autocomplete="username"></div></div><div class="group"><label for="code">Điền mã code nhận thưởng</label><div class="line"><span>▣</span><input id="code" name="code" placeholder="Mã code" maxlength="6" minlength="6" pattern="[A-Za-z]{6}" required></div></div><div class="verification"><div class="verify-widget"></div><div class="verify-setup">Xác minh Cloudflare chưa được cấu hình</div></div><button class="submit" type="submit">KIỂM TRA NGAY</button></form></div></div></main><div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="dialog" id="dialog"><div class="status-icon" id="icon">❌</div><h2 id="resultTitle">NHẬP MÃ KHUYẾN MÃI</h2><p class="message" id="message">MÃ CODE KHÔNG HỢP LỆ</p><div class="reward" id="reward" hidden></div><div><button type="button" id="close">XÁC NHẬN</button></div><div class="note" id="note"></div></div></div><script>
 if ('scrollRestoration' in history) history.scrollRestoration='manual';
 window.addEventListener('load',function(){if(!location.hash)window.scrollTo(0,0)},{once:true});
