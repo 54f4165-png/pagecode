@@ -19,7 +19,28 @@
 .title{position:relative;z-index:4;display:flex;align-items:flex-end;justify-content:center;width:100%;margin:0 0 -5px!important;transform:none!important;line-height:1!important;text-shadow:none!important;-webkit-text-stroke:0!important;white-space:normal!important;}
 .title img{display:block;width:min(700px,calc(100vw - 20px));max-width:none;height:auto;flex:none;object-fit:contain;filter:none;transform:none;}
 @media(max-width:700px){.title{margin-bottom:-2px!important}.title img{width:min(100vw - 10px,700px)}}
-</style></head><body><header class="site-header"><div class="logo">E39</div><nav class="nav" aria-label="Điều hướng"><a href="#" data-link="home"><span class="ico">🏠</span>Trang Chủ</a><a href="#" data-link="contact"><span class="ico">📣</span>Liên Hệ</a><a href="#" data-link="telegram"><span class="ico">✈️</span>Telegram</a><a href="#" data-link="fanpage"><span class="ico">🟠</span>Fanpage</a></nav></header><main class="stage"><div class="center"><h1 class="title"><img src="/e39-title-from-reference.png" alt="Page nhập code" loading="eager" decoding="async"></h1><div class="code-panel"><form class="code-form" id="desktopForm"><div class="group"><label for="account">Nhập tên tài khoản</label><div class="line"><span>♟</span><input id="account" name="account" placeholder="Nhập tài khoản" required autocomplete="username"></div></div><div class="group"><label for="code">Điền mã code nhận thưởng</label><div class="line"><span>▣</span><input id="code" name="code" placeholder="Mã code" maxlength="6" minlength="6" pattern="[A-Za-z]{6}" required></div></div><div class="verification"><div class="verify-widget"></div><div class="verify-setup">Xác minh Cloudflare chưa được cấu hình</div></div><button class="submit" type="submit">KIỂM TRA NGAY</button></form></div></div></main><div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="dialog" id="dialog"><div class="status-icon" id="icon">❌</div><h2 id="resultTitle">NHẬP MÃ KHUYẾN MÃI</h2><p class="message" id="message">MÃ CODE KHÔNG HỢP LỆ</p><div class="reward" id="reward" hidden></div><div><button type="button" id="close">XÁC NHẬN</button></div><div class="note" id="note"></div></div></div><script src="config.js"></script><script>
+
+/* V11: restore gift above reference title and match taller gold panel.
+   Visual-only overrides; do not alter form, Turnstile or API logic. */
+.stage{background-image:url('e39-background-clean.webp');background-position:center center;background-repeat:no-repeat;background-size:cover}
+.center{width:min(610px,100%)}
+.title-group{position:relative;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;margin-bottom:-12px}
+.gift-restored{font-size:67px;line-height:1;position:relative;z-index:5;margin-bottom:-23px;filter:drop-shadow(0 3px 2px #a75a1b66)}
+.title{width:100%;margin:0!important;z-index:6}
+.title img{width:min(730px,calc(100vw - 16px));max-width:none}
+.code-panel{padding:42px 18px 18px;border-radius:29px;background:linear-gradient(160deg,#ffdc59 0%,#ffbd25 55%,#ffa711 100%);border:3px solid #ed920b;box-shadow:0 8px 0 #c97616,0 16px 25px #87470033}
+.code-form{padding:25px 22px 22px;border-radius:22px;gap:13px}
+@media(max-width:700px){
+ .stage{background-position:center top;background-size:auto 100%;padding-top:clamp(26px,5vh,65px)}
+ .center{width:min(520px,100%)}
+ .gift-restored{font-size:49px;margin-bottom:-17px}
+ .title-group{margin-bottom:-7px}
+ .title img{width:min(100vw - 12px,730px)}
+ .code-panel{padding:31px 10px 13px;border-radius:23px}
+ .code-form{padding:20px 13px 19px;gap:12px}
+}
+@media(max-width:360px){.gift-restored{font-size:43px;margin-bottom:-14px}.code-panel{padding-top:27px}.code-form{padding:16px 10px}}
+</style></head><body><header class="site-header"><div class="logo">E39</div><nav class="nav" aria-label="Điều hướng"><a href="#" data-link="home"><span class="ico">🏠</span>Trang Chủ</a><a href="#" data-link="contact"><span class="ico">📣</span>Liên Hệ</a><a href="#" data-link="telegram"><span class="ico">✈️</span>Telegram</a><a href="#" data-link="fanpage"><span class="ico">🟠</span>Fanpage</a></nav></header><main class="stage"><div class="center"><div class="title-group"><div class="gift-restored" aria-hidden="true">🎁</div><h1 class="title"><img src="/e39-title-from-reference.png" alt="Page nhập code" loading="eager" decoding="async"></h1></div><div class="code-panel"><form class="code-form" id="desktopForm"><div class="group"><label for="account">Nhập tên tài khoản</label><div class="line"><span>♟</span><input id="account" name="account" placeholder="Nhập tài khoản" required autocomplete="username"></div></div><div class="group"><label for="code">Điền mã code nhận thưởng</label><div class="line"><span>▣</span><input id="code" name="code" placeholder="Mã code" maxlength="6" minlength="6" pattern="[A-Za-z]{6}" required></div></div><div class="verification"><div class="verify-widget"></div><div class="verify-setup">Xác minh Cloudflare chưa được cấu hình</div></div><button class="submit" type="submit">KIỂM TRA NGAY</button></form></div></div></main><div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="dialog" id="dialog"><div class="status-icon" id="icon">❌</div><h2 id="resultTitle">NHẬP MÃ KHUYẾN MÃI</h2><p class="message" id="message">MÃ CODE KHÔNG HỢP LỆ</p><div class="reward" id="reward" hidden></div><div><button type="button" id="close">XÁC NHẬN</button></div><div class="note" id="note"></div></div></div><script src="config.js"></script><script>
 // Supply a secure server-side verification endpoint. Never embed valid codes or API secrets in public HTML.
 const API_URL='/api/verify';
 // Dán Site Key công khai từ Cloudflare Turnstile (không dán Secret Key ở đây).
