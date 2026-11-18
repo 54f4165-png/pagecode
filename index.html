@@ -58,6 +58,32 @@
  .mobile-card .submit{display:block;align-self:center;width:59%;height:clamp(34px,9vw,43px);min-height:0;margin:0;border-radius:60px;border:3px solid #ffd58e;background:linear-gradient(#ffcb78,#ff8b1b);box-shadow:inset 0 0 0 2px #fff0c9,0 2px 6px #8b4c1d;color:white;font-size:clamp(12px,3.7vw,18px);font-weight:900;text-shadow:0 1px 2px #b15b13;white-space:nowrap}
 }
 @media(max-width:350px){.mobile-head{height:155px}.mobile-logo{height:92px;font-size:65px}.mobile-head nav{height:63px}.mobile-scenery{top:155px}.mobile-banner{top:166px}.mobile-card{top:calc(166px + 28.5vw)}.mobile-card .verification{transform:scale(.65)}.mobile-turnstile{height:47px}.mobile-input{margin-bottom:5px}}
+
+/* E39 MOBILE FINAL: matching the reference layout and restoring illustrated characters. */
+@media(max-width:700px){
+ html,body{background:#fff7ed!important}
+ .stage{min-height:100svh!important;background:#fff7ed!important;overflow:hidden}
+ .mobile{min-height:max(900px,100svh)!important;background:#fff7ed!important}
+ .mobile-head{height:172px!important;background:#202020!important}
+ .mobile-logo{height:105px!important;font-size:74px!important}
+ .mobile-head nav{height:67px!important;padding:0 10px!important;gap:2px!important}
+ .mobile-head nav a{font-size:clamp(10px,2.6vw,14px)!important;gap:3px!important}
+ .mobile-head nav a span{font-size:clamp(13px,3.5vw,19px)!important}
+ .mobile-scenery{top:172px!important;bottom:0!important;background-image:url('mobile-scenery.jpg')!important;background-size:100% 100%!important;background-position:center!important}
+ .mobile-banner{top:182px!important;width:100%!important;aspect-ratio:720/600!important;background-size:100% 100%!important}
+ .mobile-card{top:calc(182px + 29vw)!important;width:77%!important;max-width:420px!important;gap:0!important}
+ .mobile-card label{font-size:clamp(12px,3vw,16px)!important;margin:0 0 5px!important}
+ .mobile-input{height:clamp(36px,7.8vw,43px)!important;margin-bottom:9px!important;background:#292929!important}
+ .mobile-card .mobile-input input{font-size:clamp(13px,3.1vw,17px)!important}
+ .mobile-turnstile{height:55px!important;margin-bottom:4px!important}
+ .mobile-card .verification{transform:scale(.78)!important}
+ .mobile-card .submit{width:62%!important;height:clamp(38px,8.5vw,46px)!important;font-size:clamp(13px,3.4vw,19px)!important}
+}
+@media(max-width:360px){
+ .mobile-head{height:155px!important}.mobile-logo{height:94px!important;font-size:65px!important}.mobile-head nav{height:61px!important}
+ .mobile-scenery{top:155px!important}.mobile-banner{top:165px!important}.mobile-card{top:calc(165px + 29vw)!important;width:78%!important}
+ .mobile-card .verification{transform:scale(.69)!important}.mobile-turnstile{height:49px!important}
+}
 </style></head><body><main class="stage"><div class="desktop"><button class="nav-hit" data-link="home" aria-label="Trang Chủ"></button><button class="nav-hit" data-link="contact" aria-label="Liên Hệ"></button><button class="nav-hit" data-link="telegram" aria-label="Telegram"></button><button class="nav-hit" data-link="fanpage" aria-label="Fanpage"></button><form class="form" id="desktopForm"><div class="group"><label for="account">Nhập tên tài khoản</label><div class="line"><span aria-hidden="true">♟</span><input id="account" name="account" placeholder="Nhập tài khoản" required autocomplete="username"></div></div><div class="group"><label for="code">Điền mã code nhận thưởng</label><div class="line"><span aria-hidden="true">▣</span><input id="code" name="code" placeholder="Ví dụ: SLFKSN" maxlength="6" minlength="6" pattern="[A-Za-z]{6}" required></div></div><div class="verification"><div class="verify-widget"></div><div class="verify-setup">Xác minh Cloudflare chưa được cấu hình</div></div><button class="submit" type="submit">KIỂM TRA NGAY</button></form></div><div class="mobile"><header class="mobile-head"><div class="mobile-logo">E39</div><nav><a href="#" data-link="home"><span>🅴</span>Trang Chủ</a><a href="#" data-link="contact"><span>📣</span>Liên Hệ</a><a href="#" data-link="telegram"><span>✈️</span>Telegram</a><a href="#" data-link="fanpage"><span>🟠</span>Fanpage</a></nav></header><div class="mobile-scenery" aria-hidden="true"></div><div class="mobile-banner" aria-hidden="true"></div><form class="mobile-card" id="mobileForm"><label for="mAccount">Nhập tên tài khoản</label><div class="mobile-input"><span aria-hidden="true">♟</span><input id="mAccount" name="account" placeholder="Nhập tài khoản" required autocomplete="username"></div><label for="mCode">Điền mã code nhận thưởng</label><div class="mobile-input"><span aria-hidden="true">▣</span><input id="mCode" name="code" placeholder="Mã code" maxlength="6" minlength="6" pattern="[A-Za-z]{6}" required></div><div class="mobile-turnstile"><div class="verification"><div class="verify-widget"></div><div class="verify-setup">Xác minh Cloudflare chưa được cấu hình</div></div></div><button class="submit" type="submit">KIỂM TRA NGAY</button></form></div></main><div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="dialog" id="dialog"><div class="status-icon" id="icon">❌</div><h2 id="resultTitle">NHẬP MÃ KHUYẾN MÃI</h2><p class="message" id="message">MÃ CODE KHÔNG HỢP LỆ</p><div class="reward" id="reward" hidden></div><div><button type="button" id="close">XÁC NHẬN</button></div><div class="note" id="note"></div></div></div><script src="config.js"></script><script>
 // Supply a secure server-side verification endpoint. Never embed valid codes or API secrets in public HTML.
 const API_URL='/api/verify';
