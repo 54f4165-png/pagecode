@@ -124,6 +124,17 @@
  .verify-widget{transform:scale(.66)}
  .submit{width:44%;min-height:clamp(28px,6.15vw,43px);font-size:clamp(12px,3.15vw,20px);}
 }
+
+/* V24: keep both inputs inside the printed white artwork panel on phones.
+   Overrides mobile only; no extra backgrounds or backend changes. */
+@media (max-width:700px){
+ .center{left:50%;width:70%;top:19.6%;box-sizing:border-box}
+ .center,.code-panel,.code-form,.group,.line{max-width:100%;box-sizing:border-box}
+ .group{width:100%;min-width:0}
+ .line{width:100%;min-width:0;padding:0 9px}
+ .line input{flex:1 1 auto;min-width:0;max-width:100%;box-sizing:border-box}
+ .verification{width:100%;max-width:100%}
+}
 </style></head><body><header class="site-header"><div class="logo">E39</div><nav class="nav" aria-label="Điều hướng"><a href="#" data-link="home"><span class="ico">🏠</span>Trang Chủ</a><a href="#" data-link="contact"><span class="ico">📣</span>Liên Hệ</a><a href="#" data-link="telegram"><span class="ico">✈️</span>Telegram</a><a href="#" data-link="fanpage"><span class="ico">🟠</span>Fanpage</a></nav></header><main class="stage"><div class="center"><div class="code-panel"><form class="code-form" id="desktopForm"><div class="group"><label for="account">Nhập tên tài khoản</label><div class="line"><span>♟</span><input id="account" name="account" placeholder="Nhập tài khoản" required autocomplete="username"></div></div><div class="group"><label for="code">Điền mã code nhận thưởng</label><div class="line"><span>▣</span><input id="code" name="code" placeholder="Mã code" maxlength="6" minlength="6" pattern="[A-Za-z]{6}" required></div></div><div class="verification"><div class="verify-widget"></div><div class="verify-setup">Xác minh Cloudflare chưa được cấu hình</div></div><button class="submit" type="submit">KIỂM TRA NGAY</button></form></div></div></main><div class="modal" id="modal" hidden role="dialog" aria-modal="true" aria-labelledby="resultTitle"><div class="dialog" id="dialog"><div class="status-icon" id="icon">❌</div><h2 id="resultTitle">NHẬP MÃ KHUYẾN MÃI</h2><p class="message" id="message">MÃ CODE KHÔNG HỢP LỆ</p><div class="reward" id="reward" hidden></div><div><button type="button" id="close">XÁC NHẬN</button></div><div class="note" id="note"></div></div></div><script>
 if ('scrollRestoration' in history) history.scrollRestoration='manual';
 window.addEventListener('load',function(){if(!location.hash)window.scrollTo(0,0)},{once:true});
