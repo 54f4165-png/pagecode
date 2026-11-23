@@ -1,7 +1,8 @@
 // User-side code verification backed by Firebase Realtime Database.
 // Firebase service-account credentials and Turnstile secret remain server-side.
 module.exports = async (req, res) => {
-  res.setHeader('Cache-Control', 'no-store');
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+  res.setHeader('Pragma','no-cache');
   if (req.method !== 'POST') return res.status(405).json({valid:false,reason:'method_not_allowed'});
   const {account, code, turnstileToken} = req.body || {};
   if (typeof account !== 'string' || !account.trim() || account.length > 100 ||
