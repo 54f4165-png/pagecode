@@ -1,0 +1,8 @@
+E39 USER V41 - TOI UU TOC DO
+
+- 5 phep doc Firebase doc lap duoc thuc hien song song.
+- Ghi nhat ky va tang bo dem duoc thuc hien song song, van cho ghi xong truoc khi tra ket qua de tranh mat log.
+- Giu nguyen Turnstile, transaction chong su dung code 2 lan, giao dien, va noi dung thong bao.
+- Khong thay doi ADMIN V40, vi API USER la diem nghen tim thay.
+- Khong dam bao thoi gian co dinh: phu thuoc mang, Vercel, Firebase, Cloudflare.
+- Khong can doi bien moi truong.

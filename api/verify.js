@@ -38,14 +38,15 @@ module.exports = async (req, res) => {
         amount:payload?.valid===true?Number(payload.amount)||0:null,
         ip,device,os,browser,userAgent:ua};
       const counterKey=crypto.createHash('sha256').update(record.account+'\0'+record.code).digest('hex');
-      (async()=>{
-        try {
-          const tx=await db.ref('codeCheckCounts/'+counterKey).transaction(v=>(Number(v)||0)+1,undefined,false);
-          if(tx.committed)record.attemptNumber=tx.snapshot.val();
-        } catch(e){console.error('CODE AUDIT COUNT:',e?.message)}
-        try {await db.ref('codeCheckLogs').push(record)}
-        catch(e){console.error('CODE AUDIT WRITE:',e?.message)}
-      })().finally(()=>originalJson(payload));
+      // Run independent audit writes concurrently instead of serially.
+      // The log is committed before responding so serverless shutdown cannot drop it.
+      Promise.allSettled([
+        db.ref('codeCheckCounts/'+counterKey).transaction(v=>(Number(v)||0)+1,undefined,false),
+        db.ref('codeCheckLogs').push(record)
+      ]).then(results=>{
+        for (const result of results) if(result.status==='rejected')
+          console.error('CODE AUDIT:',result.reason?.message || result.reason);
+      }).finally(()=>originalJson(payload));
       return res;
     };
     const normalized = code.trim().toUpperCase();
@@ -60,17 +61,22 @@ module.exports = async (req, res) => {
     };
     if (!/^[A-Z]{6}$/.test(normalized)) return res.status(200).json({valid:false,reason:'invalid_code'});
     // A tombstone survives deletion from ADMIN and blocks reuse.
-    const usedSnap = await db.ref('usedCodes/'+normalized).once('value');
+    // Independent lookups run in parallel to avoid 3-5 sequential RTDB round trips.
+    const [usedSnap,bonusSnap,depositSnap,topupPoolSnap,bonusPoolSnap]=await Promise.all([
+      db.ref('usedCodes/'+normalized).once('value'),
+      db.ref('bonusCodes/'+normalized).once('value'),
+      db.ref('depositCodes/'+normalized).once('value'),
+      db.ref('topupPool/'+normalized).once('value'),
+      db.ref('bonusPool/'+normalized).once('value')
+    ]);
     if(usedSnap.exists()) return res.status(200).json({valid:false,reason:'code_expired'});
-    const bonusRef=db.ref('bonusCodes/'+normalized);
-    const bonusSnap=await bonusRef.once('value');
     if(bonusSnap.exists()){
       const bonus=bonusSnap.val();
       if(bonus && typeof bonus==='object' && bonus.status==='used')return res.status(200).json({valid:false,reason:'code_expired'});
       if(bonus && typeof bonus==='object' && bonus.status==='expired')return res.status(200).json({valid:false,reason:'code_expired'});
       const amount=Number(bonus&&typeof bonus==='object'?bonus.amount:bonus);
       if(!Number.isSafeInteger(amount)||amount<=0||amount>1000000000)return res.status(200).json({valid:false,reason:'code_not_configured'});
-      const poolBefore=await db.ref('bonusPool/'+normalized).once('value');
+      const poolBefore=bonusPoolSnap;
       if(poolBefore.exists() && ['used','expired'].includes(poolBefore.val()?.status))
         return res.status(200).json({valid:false,reason:'code_expired'});
       // usedCodes/<code> is the per-code concurrency lock, shared across types.
@@ -79,7 +85,7 @@ module.exports = async (req, res) => {
         return res.status(200).json({valid:false,reason:'code_expired'});
       const now=Date.now();
       const claimant=String(account).trim();
-      const poolSnap=await db.ref('bonusPool/'+normalized).once('value');
+      const poolSnap=bonusPoolSnap;
       const updates={};
       updates['bonusCodes/'+normalized]={amount,status:'used',usedAt:now,account:claimant};
       if(poolSnap.exists())updates['bonusPool/'+normalized+'/status']='used';
@@ -96,7 +102,6 @@ module.exports = async (req, res) => {
       }
       return res.status(200).json({valid:true,type:'bonus',amount,currency:'VND'});
     }
-    const depositSnap=await db.ref('depositCodes/'+normalized).once('value');
     if(depositSnap.exists()){
       const entry=depositSnap.val();
       if(entry&&typeof entry==='object'&&['used','expired'].includes(entry.status))return res.status(200).json({valid:false,reason:'code_expired'});
@@ -108,7 +113,7 @@ module.exports = async (req, res) => {
       return res.status(200).json({valid:false,reason:'deposit_required',amount,currency:'VND'});
     }
     // Generated pools are not valid until ADMIN assigns an amount.
-    const [topupPool,bonusPool]=await Promise.all([db.ref('topupPool/'+normalized).once('value'),db.ref('bonusPool/'+normalized).once('value')]);
+    const topupPool=topupPoolSnap,bonusPool=bonusPoolSnap;
     if(topupPool.exists()||bonusPool.exists()){
       const pool=topupPool.exists()?topupPool.val():bonusPool.val();
       if(pool?.status==='expired'||pool?.status==='used')return res.status(200).json({valid:false,reason:'code_expired'});
