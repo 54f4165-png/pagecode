@@ -20,6 +20,34 @@ module.exports = async (req, res) => {
     const verified = await response.json();
     if (verified.success !== true) return res.status(200).json({valid:false,reason:'verification_failed'});
     const {db} = require('./_firebase');
+    // Record each Turnstile-verified attempt, including unsuccessful code checks.
+    // Logging runs server-side and is not exposed to the public USER page.
+    const clean = (v, max=180) => String(v || '').replace(/[\x00-\x1f\x7f]/g, '').slice(0,max);
+    const ipHeader = req.headers['x-vercel-forwarded-for'] || req.headers['x-forwarded-for'] || '';
+    const ip = clean((Array.isArray(ipHeader)?ipHeader[0]:ipHeader).split(',')[0].trim() || req.socket?.remoteAddress, 64);
+    const ua = clean(req.headers['user-agent'], 320);
+    const device = /ipad|tablet|android(?!.*mobile)/i.test(ua) ? 'Tablet' : /mobile|iphone|ipod|android/i.test(ua) ? 'Điện thoại' : 'PC / Khác';
+    const os = /windows nt/i.test(ua)?'Windows':/iphone|ipad|ipod/i.test(ua)?'iOS / iPadOS':/android/i.test(ua)?'Android':/mac os x/i.test(ua)?'macOS':/linux/i.test(ua)?'Linux':'Không rõ';
+    const browser = /edg\//i.test(ua)?'Edge':/firefox\//i.test(ua)?'Firefox':/chrome\//i.test(ua)?'Chrome':/safari\//i.test(ua)?'Safari':'Không rõ';
+    const crypto = require('crypto');
+    const originalJson = res.json.bind(res);
+    res.json = function(payload) {
+      // Do not allow logging failures to change the actual CODE verification result.
+      const record = {at:Date.now(),account:clean(account.trim(),100),code:clean(code.trim().toUpperCase(),150),
+        valid:payload?.valid===true,reason:clean(payload?.reason || (payload?.valid?'success':'unknown'),80),
+        amount:payload?.valid===true?Number(payload.amount)||0:null,
+        ip,device,os,browser,userAgent:ua};
+      const counterKey=crypto.createHash('sha256').update(record.account+'\0'+record.code).digest('hex');
+      (async()=>{
+        try {
+          const tx=await db.ref('codeCheckCounts/'+counterKey).transaction(v=>(Number(v)||0)+1,undefined,false);
+          if(tx.committed)record.attemptNumber=tx.snapshot.val();
+        } catch(e){console.error('CODE AUDIT COUNT:',e?.message)}
+        try {await db.ref('codeCheckLogs').push(record)}
+        catch(e){console.error('CODE AUDIT WRITE:',e?.message)}
+      })().finally(()=>originalJson(payload));
+      return res;
+    };
     const normalized = code.trim().toUpperCase();
     // A CODE can be submitted only once globally, regardless of account or type.
     // RTDB transaction prevents two simultaneous requests from claiming the same CODE.
